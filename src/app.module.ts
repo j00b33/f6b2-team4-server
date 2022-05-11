@@ -13,7 +13,7 @@ import { BoardModule } from './apis/board/board.module';
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'my-database',
+      host: '10.127.112.4',
       port: 3306,
       username: 'root',
       password: 'root',
