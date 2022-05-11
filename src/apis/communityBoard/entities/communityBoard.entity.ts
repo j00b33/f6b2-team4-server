@@ -9,28 +9,32 @@ import {
 
 @Entity()
 @ObjectType()
-export class Board {
+export class CommunityBoard {
   @PrimaryGeneratedColumn('uuid')
   @Field(() => String)
   id: string;
 
   @Column()
   @Field(() => String)
-  content: string;
+  title: string;
 
   @Column()
   @Field(() => String)
-  video: string;
+  content: string;
 
   @CreateDateColumn()
   @Field(() => Date)
   date: Date;
 
-  @Column()
+  @Column({ default: 0 })
   @Field(() => Int)
   likes: number;
 
-  // @ManyToOne(() => User)
-  // @Field(() => User)
-  // user: User;
+  @Column()
+  @Field(() => String)
+  image: string;
+
+  //   @ManyToOne(() => User)
+  //   @Field(() => User)
+  //   user: User;
 }

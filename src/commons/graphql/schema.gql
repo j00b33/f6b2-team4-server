@@ -4,10 +4,10 @@
 
 type Board {
   id: String!
-  title: String!
   content: String!
-  boardVideo: String!
+  video: String!
   date: DateTime!
+  likes: Int!
 }
 
 """
@@ -15,16 +15,33 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type CommunityBoard {
+  id: String!
+  title: String!
+  content: String!
+  date: DateTime!
+  likes: Int!
+  image: String!
+}
+
 type Query {
   fetchBoards: [Board!]!
+  fetchCommunityBoards: [CommunityBoard!]!
 }
 
 type Mutation {
   createBoard(createBoardInput: CreateBoardInput!): Board!
+  createCommunityBoard(createCommunityBoardInput: CreateCommunityBoardInput!): CommunityBoard!
 }
 
 input CreateBoardInput {
+  content: String!
+  video: String!
+  likes: Int!
+}
+
+input CreateCommunityBoardInput {
   title: String!
   content: String!
-  boardVideo: String!
+  image: String
 }
