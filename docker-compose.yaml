@@ -15,10 +15,10 @@ services:
     platform: linux/x86_64
     image: mysql:latest
     environment:
-      MYSQL_DATABASE: 'mydocker02'
+      MYSQL_DATABASE: 'teamproject'
       MYSQL_ROOT_PASSWORD: 'root'
-    env_file:
-      - ./.env
+    # env_file:
+    #   - ./.env
     ports:
       - 3306:3306
 
