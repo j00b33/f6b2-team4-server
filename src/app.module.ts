@@ -4,6 +4,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BoardModule } from './apis/board/board.module';
 import { CommunityBoardModule } from './apis/communityBoard/communityBoard.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -15,8 +17,8 @@ import { CommunityBoardModule } from './apis/communityBoard/communityBoard.modul
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      // host: '10.127.112.4',
-      host: 'my-database',
+      host: '10.127.112.4',
+      // host: 'my-database',
       port: 3306,
       username: 'root',
       password: 'root',
@@ -27,7 +29,7 @@ import { CommunityBoardModule } from './apis/communityBoard/communityBoard.modul
     }),
   ],
 
-  // controllers: [],
-  // providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
