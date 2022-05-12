@@ -1,5 +1,5 @@
 {
-  "name": "nestjs",
+  "name": "12-02-nest-js",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -21,28 +21,38 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/apollo": "^10.0.11",
-    "@nestjs/common": "^8.4.4",
+    "@google-cloud/storage": "^5.19.2",
+    "@nestjs/apollo": "^10.0.8",
+    "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
-    "@nestjs/graphql": "^10.0.11",
+    "@nestjs/graphql": "^10.0.8",
+    "@nestjs/jwt": "^8.0.0",
+    "@nestjs/passport": "^8.2.1",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.3",
-    "apollo-server-core": "^3.7.0",
-    "apollo-server-express": "^3.7.0",
-    "graphql": "^16.5.0",
+    "apollo-server-express": "^3.6.7",
+    "bcrypt": "^5.0.1",
+    "graphql": "^16.3.0",
+    "graphql-upload": "^13.0.0",
     "mysql2": "^2.3.3",
+    "passport": "^0.5.2",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.3.6"
+    "typeorm": "^0.2.45"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
+    "@types/graphql-upload": "^8.0.11",
     "@types/jest": "27.4.1",
     "@types/node": "^16.0.0",
+    "@types/passport-jwt": "^3.0.6",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -75,5 +85,6 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "main": "index.js"
 }
