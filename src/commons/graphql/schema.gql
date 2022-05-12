@@ -9,15 +9,16 @@ type User {
   myLang: String!
   newLang: String!
   image: String!
-  password: String!
 }
 
 type Board {
   id: String!
   content: String!
   video: String!
-  date: DateTime!
   likes: Int!
+  writer: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """
@@ -29,16 +30,19 @@ type CommunityBoard {
   id: String!
   title: String!
   content: String!
-  date: DateTime!
+  createdAt: DateTime!
   likes: Int!
   image: String!
+  writer: User!
 }
 
 type Query {
   fetchBoards: [Board!]!
+  fetchBoard(boardId: String!): Board!
   fetchUsers: [User!]!
   fetchUser: User!
   fetchCommunityBoards: [CommunityBoard!]!
+  fetchCommunityBoard(communityBoardId: String!): CommunityBoard!
 }
 
 type Mutation {
@@ -46,16 +50,24 @@ type Mutation {
   logout: String!
   restoreAccessToken: String!
   createBoard(createBoardInput: CreateBoardInput!): Board!
+  updateBoard(boardId: String!, updateBoardInput: UpdateBoardInput!): Board!
+  deleteBoard(boardId: String!): Boolean!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(originalPassword: String!, updateUserInput: UpdateUserInput!): User!
   deleteUser(id: String!): Boolean!
   createCommunityBoard(createCommunityBoardInput: CreateCommunityBoardInput!): CommunityBoard!
+  updateCommunityBoard(communityBoardId: String!, updateCommunityBoardInput: UpdateCommunityBoardInput!): CommunityBoard!
+  deleteCommunityBoard(communityBoardId: String!): Boolean!
 }
 
 input CreateBoardInput {
   content: String!
   video: String!
-  likes: Int!
+}
+
+input UpdateBoardInput {
+  content: String
+  video: String
 }
 
 input CreateUserInput {
@@ -79,5 +91,11 @@ input UpdateUserInput {
 input CreateCommunityBoardInput {
   title: String!
   content: String!
+  image: String
+}
+
+input UpdateCommunityBoardInput {
+  title: String
+  content: String
   image: String
 }
