@@ -24,7 +24,6 @@ export class UserResolver {
   @Query(() => User)
   fetchUser(
     //@Args("writer")
-
     @CurrentUser() currentUser: any, //우리가 만든 데코레이터 - context 있는 데이터를 뽑아오기위함
   ) {
     console.log('currentUser는?', currentUser);
