@@ -35,7 +35,6 @@ export class User {
   image: string;
 
   @Column()
-  @Field(() => String)
   password: string;
 
   //   @JoinColumn()
