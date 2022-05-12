@@ -2,6 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  id: String!
+  name: String!
+  email: String!
+  myLang: String!
+  newLang: String!
+  image: String!
+  password: String!
+}
+
 type Board {
   id: String!
   content: String!
@@ -26,11 +36,19 @@ type CommunityBoard {
 
 type Query {
   fetchBoards: [Board!]!
+  fetchUsers: [User!]!
+  fetchUser: User!
   fetchCommunityBoards: [CommunityBoard!]!
 }
 
 type Mutation {
+  login(email: String!, password: String!): String!
+  logout: String!
+  restoreAccessToken: String!
   createBoard(createBoardInput: CreateBoardInput!): Board!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(originalPassword: String!, updateUserInput: UpdateUserInput!): User!
+  deleteUser(id: String!): Boolean!
   createCommunityBoard(createCommunityBoardInput: CreateCommunityBoardInput!): CommunityBoard!
 }
 
@@ -38,6 +56,24 @@ input CreateBoardInput {
   content: String!
   video: String!
   likes: Int!
+}
+
+input CreateUserInput {
+  name: String!
+  image: String!
+  email: String!
+  password: String!
+  myLang: String!
+  newLang: String!
+}
+
+input UpdateUserInput {
+  name: String
+  image: String
+  email: String
+  password: String
+  myLang: String
+  newLang: String
 }
 
 input CreateCommunityBoardInput {
