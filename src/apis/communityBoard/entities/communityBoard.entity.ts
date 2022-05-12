@@ -1,10 +1,13 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { User } from 'src/apis/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -24,7 +27,13 @@ export class CommunityBoard {
 
   @CreateDateColumn()
   @Field(() => Date)
-  date: Date;
+  createdAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @Column({ default: 0 })
   @Field(() => Int)
@@ -34,7 +43,7 @@ export class CommunityBoard {
   @Field(() => String)
   image: string;
 
-  //   @ManyToOne(() => User)
-  //   @Field(() => User)
-  //   user: User;
+  @ManyToOne(() => User)
+  @Field(() => User)
+  writer: User;
 }
