@@ -1,15 +1,19 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RedisClientOptions } from 'redis';
+import { AuthModule } from './apis/auth/auth.module';
 import { BoardModule } from './apis/board/board.module';
 import { CommunityBoardModule } from './apis/communityBoard/communityBoard.module';
 import { UserModule } from './apis/user/user.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
+    AuthModule,
     BoardModule,
     UserModule,
     CommunityBoardModule,
@@ -19,8 +23,8 @@ import { AppService } from './app.service';
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '10.127.112.4',
-      // host: 'my-database',
+      // host: '10.127.112.4',
+      host: 'my-database',
       port: 3306,
       username: 'root',
       password: 'root',
@@ -28,6 +32,11 @@ import { AppService } from './app.service';
       entities: [__dirname + '/apis/**/*.entity.*'], //각 경로 설정
       synchronize: true,
       logging: true,
+    }),
+    CacheModule.register<RedisClientOptions>({
+      store: redisStore,
+      url: 'redis://my-redis:6379',
+      isGlobal: true,
     }),
   ],
 
