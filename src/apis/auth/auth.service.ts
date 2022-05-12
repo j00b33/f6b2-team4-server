@@ -18,7 +18,7 @@ export class AuthService {
     );
 
     //개발 환경
-    res.setHeader('Set-Cookie', `refreshToken=${refreshToken}; path=/;`);
+    // res.setHeader('Set-Cookie', `refreshToken=${refreshToken}; path=/;`);
 
     // 배포환경;
     // res.setHeader('Access-Control-Allow-Origin', 'https://myfrontsite.com');
