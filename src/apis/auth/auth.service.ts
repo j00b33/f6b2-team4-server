@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly userService: UserService,
+  ) {}
 
   setRefreshToken({ user, res }) {
     const refreshToken = this.jwtService.sign(
@@ -29,5 +33,24 @@ export class AuthService {
       { email: user.email, sub: user.id },
       { secret: 'myAccessKey', expiresIn: '1h' },
     );
+  }
+  async userCheck({ req, res }) {
+    //1. 가입 확인
+    let user = await this.userService.findOne({
+      email: req.user.email,
+    });
+
+    //2. 회원 가입
+    if (!user) {
+      user = await this.userService.create({
+        createUserInput: req.user,
+      });
+    }
+    //3. 로그인
+    this.setRefreshToken({ user, res });
+    //여기로 온다
+    // res.redirect(
+    //   'http://localhost:5500/homework/main-project/frontend/login/index.html',
+    // );
   }
 }
