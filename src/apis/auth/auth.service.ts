@@ -34,6 +34,7 @@ export class AuthService {
       { secret: 'myAccessKey', expiresIn: '1h' },
     );
   }
+
   async userCheck({ req, res }) {
     //1. 가입 확인
     let user = await this.userService.findOne({
@@ -48,9 +49,9 @@ export class AuthService {
     }
     //3. 로그인
     this.setRefreshToken({ user, res });
-    //여기로 온다
-    // res.redirect(
-    //   'http://localhost:5500/homework/main-project/frontend/login/index.html',
-    // );
+    // 여기로 온다
+    res.redirect(
+      'http://localhost:5500/homework/main-project/frontend/login/index.html',
+    );
   }
 }
