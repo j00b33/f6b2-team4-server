@@ -19,6 +19,7 @@ type Board {
   likes: Int!
   writer: User!
   createdAt: DateTime!
+  deletedAt: DateTime!
   updatedAt: DateTime!
 }
 
@@ -45,6 +46,9 @@ type Comment {
   video: String!
   writer: User!
   board: Board!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
   parentComment: Comment!
 }
 
@@ -55,7 +59,7 @@ type Query {
   fetchUser: User!
   fetchCommunityBoards: [CommunityBoard!]!
   fetchCommunityBoard(communityBoardId: String!): CommunityBoard!
-  fetchComments: [Comment!]!
+  fetchComments(boardId: String!): [Comment!]!
 }
 
 type Mutation {
@@ -72,6 +76,8 @@ type Mutation {
   updateCommunityBoard(communityBoardId: String!, updateCommunityBoardInput: UpdateCommunityBoardInput!): CommunityBoard!
   deleteCommunityBoard(communityBoardId: String!): Boolean!
   createComment(createCommentInput: CreateCommentInput!, boardId: String!): Comment!
+  updateComment(updateCommentInput: UpdateCommentInput!, commentId: String!): Comment!
+  deleteComment(commentId: String!): Boolean!
 }
 
 input CreateBoardInput {
@@ -116,6 +122,12 @@ input UpdateCommunityBoardInput {
 
 input CreateCommentInput {
   content: String!
-  image: String!
-  video: String!
+  image: String
+  video: String
+}
+
+input UpdateCommentInput {
+  content: String
+  image: String
+  video: String
 }

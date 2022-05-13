@@ -3,7 +3,8 @@ import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';
 import { CurrentUser, ICurrentUser } from 'src/commons/auth/gql-user.param';
 import { CommentService } from './comment.service';
-import { CreateCommentInput } from './dto/comment.input';
+import { CreateCommentInput } from './dto/createComment.input';
+import { UpdateCommentInput } from './dto/updateComment.input';
 import { Comment } from './entities/comment.entity';
 
 @Resolver()
@@ -11,8 +12,8 @@ export class CommentResolver {
   constructor(private readonly commentService: CommentService) {}
 
   @Query(() => [Comment])
-  fetchComments() {
-    return this.commentService.findAll();
+  fetchComments(@Args('boardId') boardId: string) {
+    return this.commentService.findAll({ boardId });
   }
 
   @UseGuards(GqlAuthAccessGuard)
@@ -27,5 +28,21 @@ export class CommentResolver {
       boardId,
       currentUser,
     });
+  }
+
+  @Mutation(() => Comment)
+  async updateComment(
+    @Args('updateCommentInput') updateCommentInput: UpdateCommentInput,
+    @Args('commentId') commentId: string,
+  ) {
+    return this.commentService.update({
+      updateCommentInput,
+      commentId,
+    });
+  }
+
+  @Mutation(() => Boolean)
+  async deleteComment(@Args('commentId') commentId: string) {
+    return await this.commentService.delete({ commentId });
   }
 }

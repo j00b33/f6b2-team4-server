@@ -5,9 +5,9 @@ export class CreateCommentInput {
   @Field(() => String)
   content: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   image: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   video: string;
 }
