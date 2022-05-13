@@ -10,6 +10,7 @@ import { UserModule } from './apis/user/user.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import * as redisStore from 'cache-manager-redis-store';
+import { CommentModule } from './apis/comment/comment.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import * as redisStore from 'cache-manager-redis-store';
     BoardModule,
     UserModule,
     CommunityBoardModule,
+    CommentModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/commons/graphql/schema.gql',

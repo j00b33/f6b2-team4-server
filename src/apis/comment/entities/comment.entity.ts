@@ -1,5 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Board } from 'src/apis/board/entities/board.entity';
+import { User } from 'src/apis/user/entities/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -25,7 +26,15 @@ export class Comment {
   @Field(() => String)
   video: string;
 
+  @ManyToOne(() => User)
+  @Field(() => User)
+  writer: User;
+
   @ManyToOne(() => Board)
   @Field(() => Board)
   board: Board;
+
+  @ManyToOne(() => Comment)
+  @Field(() => Comment)
+  parentComment: Comment;
 }

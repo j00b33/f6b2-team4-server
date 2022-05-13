@@ -37,6 +37,17 @@ type CommunityBoard {
   writer: User!
 }
 
+type Comment {
+  id: String!
+  content: String!
+  likes: Int!
+  image: String!
+  video: String!
+  writer: User!
+  board: Board!
+  parentComment: Comment!
+}
+
 type Query {
   fetchBoards: [Board!]!
   fetchBoard(boardId: String!): Board!
@@ -44,6 +55,7 @@ type Query {
   fetchUser: User!
   fetchCommunityBoards: [CommunityBoard!]!
   fetchCommunityBoard(communityBoardId: String!): CommunityBoard!
+  fetchComments: [Comment!]!
 }
 
 type Mutation {
@@ -59,6 +71,7 @@ type Mutation {
   createCommunityBoard(createCommunityBoardInput: CreateCommunityBoardInput!): CommunityBoard!
   updateCommunityBoard(communityBoardId: String!, updateCommunityBoardInput: UpdateCommunityBoardInput!): CommunityBoard!
   deleteCommunityBoard(communityBoardId: String!): Boolean!
+  createComment(createCommentInput: CreateCommentInput!, boardId: String!): Comment!
 }
 
 input CreateBoardInput {
@@ -99,4 +112,10 @@ input UpdateCommunityBoardInput {
   title: String
   content: String
   image: String
+}
+
+input CreateCommentInput {
+  content: String!
+  image: String!
+  video: String!
 }
