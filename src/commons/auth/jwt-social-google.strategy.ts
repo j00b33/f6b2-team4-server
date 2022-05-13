@@ -9,9 +9,9 @@ export class JwtGoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor() {
     super({
       //검중부, Bearer 뺴고 넣어야함, 내장 되어있음 .fromauthheadera
-      clientID: '입력하기', //구굴에서 들고오셈
-      clientSecret: '입력하기',
-      callbackURL: '입력하기',
+      clientID: process.env.GOOGLE_KEY, //구굴에서 들고오셈
+      clientSecret: process.env.GOOGLE_SECRET,
+      callbackURL: 'http://localhost:3000/login/google',
       scope: ['email', 'profile'], //사이트마다 다르다
     });
   }
@@ -25,6 +25,9 @@ export class JwtGoogleStrategy extends PassportStrategy(Strategy, 'google') {
       password: '1111',
       name: profile.displayName, //req.user라는 이름에  contest 로 들어감
       age: 0,
+      phone: '01020311883',
+      address: '구로구',
+      provider: profile.provider,
     };
   }
 }

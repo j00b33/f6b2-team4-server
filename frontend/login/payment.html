@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>결제하기</title>
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-1.12.4.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/axios/dist/axios.min.js"
+    ></script>
+    <script>
+      const myAmount = 100;
+      //   let merchant_uid = 3;
+      async function mypayment() {
+        // const myAmount = Number(document.getElementById("amount").value);
+
+        const IMP = window.IMP; // 생략 가능
+        IMP.init("imp95628969"); // Example: imp00000000
+        IMP.request_pay(
+          {
+            // param
+            pg: "html5_inicis",
+            pay_method: "card",
+            name: "Mercedes-Benz",
+            merchant_uid: 69,
+            amount: myAmount,
+            buyer_email: "gildong@gmail.com",
+            buyer_name: "홍길동",
+            buyer_tel: "010-4242-4242",
+            buyer_addr: "서울특별시 강남구 신사동",
+            buyer_postcode: "01181",
+            m_redirect_url: "", // 모바일 결제후 리다이렉트될 주소!!
+          },
+          async (rsp) => {
+            // callback
+            if (rsp.success) {
+              // 결제 성공시
+              console.log(rsp);
+              //${rsp.imp_uid}
+              const data = await axios
+                .post(
+                  "http://localhost:3000/graphql",
+                  {
+                    query: `
+                      mutation {
+                        createPointTransaction(impUid: "${rsp.imp_uid}", amount: ${rsp.paid_amount}, merchant_uid: ${rsp.merchant_uid}, ) {
+                          id
+                        }
+                      }
+                    `,
+                  },
+                  {
+                    headers: {
+                      authorization:
+                        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imhpb3NpQG5hdmVyLmNvbSIsInN1YiI6ImZmMDMwN2Y1LWYxODctNGU1OC1hMzI3LTQ4ZWQ3MjQ0YmI5MSIsInByb3ZpZGVyIjoiZ3JhcGhxbCIsImlhdCI6MTY1MDI3NjQ5NCwiZXhwIjoxNjUwMzYyODk0fQ.rx3r9iNUXZ8he8j8mbwb2GWdI_JYt798r8-0ud4szbs",
+                    },
+                  }
+                )
+                .then(alert("결제완료"));
+
+              console.log(data);
+            } else {
+              console.log("결제 실패");
+            }
+          }
+        );
+      }
+
+      async function cancelPay() {
+        const data = await axios
+          .post(
+            "http://localhost:3000/graphql",
+            {
+              query: `
+                mutation {
+                  deleteTransaction(merchant_uid:69) {
+                    id
+                  }
+                }
+              `,
+            },
+            {
+              headers: {
+                authorization:
+                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imhpb3NpQG5hdmVyLmNvbSIsInN1YiI6ImZmMDMwN2Y1LWYxODctNGU1OC1hMzI3LTQ4ZWQ3MjQ0YmI5MSIsInByb3ZpZGVyIjoiZ3JhcGhxbCIsImlhdCI6MTY1MDI3NjQ5NCwiZXhwIjoxNjUwMzYyODk0fQ.rx3r9iNUXZ8he8j8mbwb2GWdI_JYt798r8-0ud4szbs",
+              },
+            }
+          )
+          .then(alert("취소완료"));
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+      <img src =
+      https://di-uploads-development.dealerinspire.com/mercedesbenzofbuffalo/uploads/2017/10/3e443c027108d195f98006721cf9fc00x.jpg
+      width =400 height = 300>
+      <br />
+      <!--  //<input type="text" id="amount" /> -->
+      결제 금액: 100
+      <button onclick="mypayment()">결제하기</button>
+    </div>
+
+    <div>
+      <button onclick="cancelPay()">결제 취소하기</button>
+    </div>
+  </body>
+</html>
