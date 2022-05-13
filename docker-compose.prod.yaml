@@ -3,7 +3,7 @@ version: '3.7'
 services:
   my-backend:
     platform: linux/amd64
-    image: asia.gcr.io/teamproject-349902/my_backend:1.7
+    image: asia.gcr.io/teamproject-349902/my_backend:2.1
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,10 +13,10 @@ services:
     ports:
       - 3000:3000
 
-  my-redis:
-    image: redis:latest
-    ports:
-      - 6379:6379
+  # my-redis:
+  #   image: redis:latest
+  #   ports:
+  #     - 6379:6379
 
   # elasticsearch:
   #   image: elasticsearch:7.17.0
