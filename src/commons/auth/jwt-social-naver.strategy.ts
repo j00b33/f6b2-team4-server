@@ -20,6 +20,11 @@ export class JwtNaverStrategy extends PassportStrategy(Strategy, 'naver') {
     console.log(accessToken);
     console.log(refreshToken);
     console.log('🍟', profile);
+
+    if (!profile.profileImage) {
+      profile.profileImage = 'URL';
+    }
+
     return {
       email: profile.email,
       password: '0000',
@@ -27,7 +32,7 @@ export class JwtNaverStrategy extends PassportStrategy(Strategy, 'naver') {
       myLang: 'Korean',
       newLang: 'English',
       provider: profile.provider,
-      image: 'URL',
+      image: profile.profileImage,
     };
   }
 }

@@ -20,13 +20,18 @@ export class JwtGoogleStrategy extends PassportStrategy(Strategy, 'google') {
     console.log(accessToken);
     console.log(refreshToken);
     console.log(profile);
+
+    if (!profile.photos[0].value) {
+      profile.photos[0].value = 'URL';
+    }
+
     return {
       email: profile.emails[0].value,
       password: '1111',
       name: profile.displayName, //req.user라는 이름에  contest 로 들어감
-      age: 0,
-      phone: '01020311883',
-      address: '구로구',
+      myLang: 'Korean',
+      newLang: 'English',
+      image: profile.photos[0].value,
       provider: profile.provider,
     };
   }

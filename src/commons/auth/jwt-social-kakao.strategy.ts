@@ -20,6 +20,11 @@ export class JwtKakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
     console.log('카카오', accessToken);
     console.log(refreshToken);
     console.log(profile);
+
+    if (!profile.profile_image) {
+      profile.profile_image = 'URL';
+    }
+
     return {
       email: profile._json.kakao_account.email,
       password: '0000',
