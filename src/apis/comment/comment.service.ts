@@ -14,8 +14,9 @@ export class CommentService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async findAll() {
+  async findAll({ boardId }) {
     return await this.commentRepository.find({
+      where: { board: boardId },
       relations: ['board', 'writer', 'parentComment'],
     });
   }
@@ -30,5 +31,19 @@ export class CommentService {
       writer: writer,
       board: boardId,
     });
+  }
+
+  async update({ updateCommentInput, commentId }) {
+    const oldComment = await this.commentRepository.findOne({
+      where: { id: commentId },
+    });
+    const newComment = { ...oldComment, ...updateCommentInput };
+
+    return await this.commentRepository.save(newComment);
+  }
+
+  async delete({ commentId }) {
+    const result = await this.commentRepository.softDelete({ id: commentId });
+    return result.affected ? true : false;
   }
 }

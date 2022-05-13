@@ -38,6 +38,7 @@ export class Board {
   createdAt: Date;
 
   @DeleteDateColumn()
+  @Field(() => Date)
   deletedAt: Date;
 
   @UpdateDateColumn()

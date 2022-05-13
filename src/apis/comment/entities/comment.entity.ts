@@ -1,7 +1,15 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Board } from 'src/apis/board/entities/board.entity';
 import { User } from 'src/apis/user/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -18,11 +26,11 @@ export class Comment {
   @Field(() => Int)
   likes: number;
 
-  @Column()
+  @Column({ default: 'empty' })
   @Field(() => String)
   image: string;
 
-  @Column()
+  @Column({ default: 'empty' })
   @Field(() => String)
   video: string;
 
@@ -33,6 +41,18 @@ export class Comment {
   @ManyToOne(() => Board)
   @Field(() => Board)
   board: Board;
+
+  @CreateDateColumn()
+  @Field(() => Date)
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  @Field(() => Date)
+  updatedAt: Date;
+
+  @DeleteDateColumn()
+  @Field(() => Date)
+  deletedAt: Date;
 
   @ManyToOne(() => Comment)
   @Field(() => Comment)
