@@ -9,7 +9,10 @@ import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
 import { CurrentUser, ICurrentUser } from 'src/commons/auth/gql-user.param';
-import { GqlAuthRefreshGuard } from 'src/commons/auth/gql-auth.guard';
+import {
+  GqlAuthAccessGuard,
+  GqlAuthRefreshGuard,
+} from 'src/commons/auth/gql-auth.guard';
 import * as jwt from 'jsonwebtoken';
 import { Cache } from 'cache-manager';
 
@@ -54,7 +57,7 @@ export class AuthResovler {
     return this.authService.getAccessToken({ user: currentUser });
   }
 
-  @UseGuards(GqlAuthRefreshGuard)
+  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => String)
   async logout(
     @Context() context: any, //
