@@ -67,4 +67,9 @@ export class UserResolver {
   deleteUser(@Args('id') userId: string) {
     return this.userService.delete({ userId });
   }
+
+  @Mutation(() => String)
+  emailCheck(@Args('email') email: string) {
+    return this.userService.sendToken({ email });
+  }
 }

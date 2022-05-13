@@ -72,6 +72,7 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(originalPassword: String!, updateUserInput: UpdateUserInput!): User!
   deleteUser(id: String!): Boolean!
+  emailCheck(email: String!): String!
   createCommunityBoard(createCommunityBoardInput: CreateCommunityBoardInput!): CommunityBoard!
   updateCommunityBoard(communityBoardId: String!, updateCommunityBoardInput: UpdateCommunityBoardInput!): CommunityBoard!
   deleteCommunityBoard(communityBoardId: String!): Boolean!

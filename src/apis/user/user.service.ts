@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
+import axios from 'axios';
 
 @Injectable()
 export class UserService {
@@ -30,6 +31,33 @@ export class UserService {
       email: createUserInput.email,
     });
     if (user) throw new ConflictException('이미 등록된 이메일 입니다');
+
+    const appKey = process.env.EMAIL_APP_KEY;
+    const XSecretKey = process.env.EMAIL_X_SECRETE_KEY;
+    const sender = process.env.EMAIL_SENDER;
+    const template = 'URL';
+
+    await axios.post(
+      `https://api-mail.cloud.toast.com/email/v2.0/appKeys/${appKey}/sender/mail`,
+      {
+        senderAddress: sender,
+        title: 'Welcome to LangBee',
+        body: `${template}`,
+        receiverList: [
+          {
+            receiveMailAddr: createUserInput.email,
+            receiveType: 'MRT0',
+          },
+        ],
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          'X-Secret-Key': XSecretKey,
+        },
+      },
+    );
+
     return await this.userRepository.save(createUserInput);
   }
 
@@ -54,5 +82,39 @@ export class UserService {
   async delete({ userId }) {
     const result = await this.userRepository.softDelete({ id: userId });
     return result.affected ? true : false;
+  }
+
+  async sendToken({ email }) {
+    const appKey = process.env.EMAIL_APP_KEY;
+    const XSecretKey = process.env.EMAIL_X_SECRETE_KEY;
+    const sender = process.env.EMAIL_SENDER;
+
+    const i = 6;
+    const tokenNumber = String(Math.floor(Math.random() * (10 * i))).padStart(
+      i,
+      '0',
+    ); //
+
+    await axios.post(
+      `https://api-mail.cloud.toast.com/email/v2.0/appKeys/${appKey}/sender/mail`,
+      {
+        senderAddress: sender,
+        title: 'LangBee Confirmation',
+        body: `CONFIRMATION: ${tokenNumber}`,
+        receiverList: [
+          {
+            receiveMailAddr: email,
+            receiveType: 'MRT0',
+          },
+        ],
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          'X-Secret-Key': XSecretKey,
+        },
+      },
+    );
+    return tokenNumber;
   }
 }
