@@ -26,6 +26,16 @@ export class UserService {
     });
   }
 
+  getWelcomeTemplate({ createUserInput }) {
+    return `
+          <html>
+              <body>
+                  <h1 style="color: #434343">Welcome, ${createUserInput.name}!</h1>
+              </body>
+          </html>
+      `;
+  }
+
   async create({ createUserInput }) {
     const user = await this.userRepository.findOne({
       email: createUserInput.email,
@@ -35,14 +45,14 @@ export class UserService {
     const appKey = process.env.EMAIL_APP_KEY;
     const XSecretKey = process.env.EMAIL_X_SECRETE_KEY;
     const sender = process.env.EMAIL_SENDER;
-    const template = 'URL';
+    const template = this.getWelcomeTemplate({ createUserInput });
 
     await axios.post(
       `https://api-mail.cloud.toast.com/email/v2.0/appKeys/${appKey}/sender/mail`,
       {
         senderAddress: sender,
         title: 'Welcome to LangBee',
-        body: `${template}`,
+        body: template,
         receiverList: [
           {
             receiveMailAddr: createUserInput.email,
@@ -89,11 +99,10 @@ export class UserService {
     const XSecretKey = process.env.EMAIL_X_SECRETE_KEY;
     const sender = process.env.EMAIL_SENDER;
 
-    const i = 6;
-    const tokenNumber = String(Math.floor(Math.random() * (10 * i))).padStart(
-      i,
+    const tokenNumber = String(Math.floor(Math.random() * (10 * 6))).padStart(
+      6,
       '0',
-    ); //
+    );
 
     await axios.post(
       `https://api-mail.cloud.toast.com/email/v2.0/appKeys/${appKey}/sender/mail`,
