@@ -48,7 +48,6 @@ type Comment {
   board: Board!
   createdAt: DateTime!
   updatedAt: DateTime!
-  deletedAt: DateTime!
   parentComment: Comment!
 }
 
@@ -139,12 +138,14 @@ input CreateCommentInput {
   content: String!
   image: String
   video: String
+  parentCommentId: String
 }
 
 input UpdateCommentInput {
   content: String
   image: String
   video: String
+  parentCommentId: String
 }
 
 """The `Upload` scalar type represents a file upload."""

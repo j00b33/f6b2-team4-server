@@ -25,11 +25,18 @@ export class CommentService {
     const writer = await this.userRepository.findOne({
       email: currentUser.email,
     });
+    let parentComment;
+    if (createCommentInput.parentCommentId) {
+      parentComment = await this.commentRepository.findOne({
+        id: createCommentInput.parentCommentId,
+      });
+    }
 
     return this.commentRepository.save({
       ...createCommentInput,
       writer: writer,
       board: boardId,
+      parentComment,
     });
   }
 
@@ -43,7 +50,12 @@ export class CommentService {
   }
 
   async delete({ commentId }) {
-    const result = await this.commentRepository.softDelete({ id: commentId });
+    const result = await this.commentRepository.softDelete({
+      id: commentId,
+    });
+    const deleteAllRelated = await this.commentRepository.softDelete({
+      parentComment: commentId,
+    });
     return result.affected ? true : false;
   }
 }

@@ -51,7 +51,6 @@ export class Comment {
   updatedAt: Date;
 
   @DeleteDateColumn()
-  @Field(() => Date)
   deletedAt: Date;
 
   @ManyToOne(() => Comment)

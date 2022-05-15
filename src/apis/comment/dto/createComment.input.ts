@@ -10,4 +10,7 @@ export class CreateCommentInput {
 
   @Field(() => String, { nullable: true })
   video: string;
+
+  @Field(() => String, { nullable: true })
+  parentCommentId: string;
 }
