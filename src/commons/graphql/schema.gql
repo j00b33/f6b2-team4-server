@@ -52,9 +52,18 @@ type Comment {
   parentComment: Comment!
 }
 
+type BoardImage {
+  id: String!
+  image: String!
+  board: Board!
+}
+
 type Query {
   fetchBoards: [Board!]!
   fetchBoard(boardId: String!): Board!
+  fetchBoardImages: [BoardImage!]!
+  fetchBoardImage(board: String!): [BoardImage!]!
+  createBoardImage(image: [String!]!, board: String!): [BoardImage!]!
   fetchUsers: [User!]!
   fetchUser: User!
   fetchCommunityBoards: [CommunityBoard!]!
@@ -69,6 +78,9 @@ type Mutation {
   createBoard(createBoardInput: CreateBoardInput!): Board!
   updateBoard(boardId: String!, updateBoardInput: UpdateBoardInput!): Board!
   deleteBoard(boardId: String!): Boolean!
+  createBoardImage(image: [String!]!, board: String!): [BoardImage!]!
+  updateBoardImage(image: [String!]!, board: Float!): [BoardImage!]!
+  deleteBoardImage(image: String!): Boolean!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(originalPassword: String!, updateUserInput: UpdateUserInput!): User!
   deleteUser(id: String!): Boolean!
@@ -80,7 +92,7 @@ type Mutation {
   updateComment(updateCommentInput: UpdateCommentInput!, commentId: String!): Comment!
   deleteComment(commentId: String!): Boolean!
   uploadFile(files: [Upload!]!): [String!]!
-  deleteFile(files: [String!]!): String!
+  deleteFile(files: String!): String!
 }
 
 input CreateBoardInput {
