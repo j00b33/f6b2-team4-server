@@ -1,4 +1,4 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
 import { FileUpload } from 'graphql-upload';
 
@@ -48,15 +48,11 @@ export class FileService {
       projectId: 'teamproject-349902',
     }).bucket('langbeefile');
 
-    files.map((el) => {
-      return new Promise(() => {
-        storage.file(el).delete();
-      }).catch(console.log);
-    });
-
-    return 'deleted';
+    try {
+      await storage.file(files).delete();
+      return 'deleted';
+    } catch (error) {
+      throw error;
+    }
   }
 }
-// return new Promise((resolve, reject) => {
-//   storage.file(el).delete();
-// }

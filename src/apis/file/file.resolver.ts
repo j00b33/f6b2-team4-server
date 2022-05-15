@@ -16,7 +16,7 @@ export class FileResolver {
 
   @Mutation(() => String)
   deleteFile(
-    @Args({ name: 'files', type: () => [String] }) files: string[],
+    @Args({ name: 'files', type: () => String }) files: string,
     //
   ) {
     return this.fileService.delete({ files });

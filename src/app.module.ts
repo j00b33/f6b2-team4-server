@@ -12,11 +12,13 @@ import { AppService } from './app.service';
 import * as redisStore from 'cache-manager-redis-store';
 import { CommentModule } from './apis/comment/comment.module';
 import { FileModule } from './apis/file/file.module';
+import { BoardImageModule } from './apis/boardImage/boardImage.module';
 
 @Module({
   imports: [
     AuthModule,
     BoardModule,
+    BoardImageModule,
     UserModule,
     CommunityBoardModule,
     CommentModule,
