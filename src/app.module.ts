@@ -14,6 +14,7 @@ import { CommentModule } from './apis/comment/comment.module';
 import { FileModule } from './apis/file/file.module';
 import { BoardImageModule } from './apis/boardImage/boardImage.module';
 import { SaveModule } from './apis/save/save.module';
+import { CurrentRegion } from './apis/currentRegion/entities/currentRegion.entity';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { SaveModule } from './apis/save/save.module';
     UserModule,
     CommunityBoardModule,
     CommentModule,
+    CurrentRegion,
     FileModule,
     SaveModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
