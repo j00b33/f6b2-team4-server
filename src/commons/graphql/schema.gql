@@ -57,6 +57,12 @@ type BoardImage {
   board: Board!
 }
 
+type CurrentRegion {
+  id: String!
+  region: String!
+  regionDetail: String
+}
+
 type Query {
   fetchBoards: [Board!]!
   fetchBoard(boardId: String!): Board!
@@ -84,6 +90,9 @@ type Mutation {
   updateUser(originalPassword: String!, updateUserInput: UpdateUserInput!): User!
   deleteUser(id: String!): Boolean!
   emailCheck(email: String!): String!
+  createCurrentRegion(currentRegionInput: CurrentRegionInput!): CurrentRegion!
+  updateCurrentRegion(UpdateCurrentRegionInput: CurrentRegionInput!, currentRegionId: String!): CurrentRegion!
+  deleteCurrentRegion(currentRegionId: String!): Boolean!
   createCommunityBoard(createCommunityBoardInput: CreateCommunityBoardInput!): CommunityBoard!
   updateCommunityBoard(communityBoardId: String!, updateCommunityBoardInput: UpdateCommunityBoardInput!): CommunityBoard!
   deleteCommunityBoard(communityBoardId: String!): Boolean!
@@ -120,6 +129,11 @@ input UpdateUserInput {
   password: String
   myLang: String
   newLang: String
+}
+
+input CurrentRegionInput {
+  region: String!
+  regionDetail: String!
 }
 
 input CreateCommunityBoardInput {

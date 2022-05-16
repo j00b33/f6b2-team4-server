@@ -17,14 +17,24 @@ export class AuthService {
     );
 
     //개발 환경
-    res.setHeader('Set-Cookie', `refreshToken= ${refreshToken}`);
 
-    // 배포환경
-    // res.setHeader('Access-Control-Allow-Origin', 'https://myfrontsite.com')
-    // res.setHeader(
-    //   'Set-Cookie',
-    //   `refreshToken=${refreshToken}; path=/; domain=.mybacksite.com; SameSite=None; Secure; httpOnly;`
-    // )
+    // res.setHeader('Set-Cookie', `refreshToken=${refreshToken}; path=/;`);
+
+    // 배포환경 이부분 뒤에 저장 , 'https://myfrontsite.com'
+    // res.setHeader('Access-Control-Allow-Origin');
+    // 배포환경;
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader(
+      'Set-Cookie',
+      `refreshToken=${refreshToken}; path=/; domain=.team04backend.shop; SameSite=None; Secure; httpOnly;`,
+    );
+
+    res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers',
+    );
   }
 
   getAccessToken({ user }) {
