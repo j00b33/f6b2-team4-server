@@ -13,6 +13,7 @@ import * as redisStore from 'cache-manager-redis-store';
 import { CommentModule } from './apis/comment/comment.module';
 import { FileModule } from './apis/file/file.module';
 import { BoardImageModule } from './apis/boardImage/boardImage.module';
+import { SaveModule } from './apis/save/save.module';
 
 @Module({
   imports: [
@@ -23,8 +24,13 @@ import { BoardImageModule } from './apis/boardImage/boardImage.module';
     CommunityBoardModule,
     CommentModule,
     FileModule,
+    SaveModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      cors: {
+        origin: 'http://localhost:3000',
+        credentials: true,
+      },
       autoSchemaFile: 'src/commons/graphql/schema.gql',
       context: ({ req, res }) => ({ req, res }),
     }),
