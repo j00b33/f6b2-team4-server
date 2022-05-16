@@ -57,6 +57,12 @@ type BoardImage {
   board: Board!
 }
 
+type Save {
+  id: String!
+  board: Board!
+  user: User!
+}
+
 type Query {
   fetchBoards: [Board!]!
   fetchBoard(boardId: String!): Board!
@@ -68,6 +74,7 @@ type Query {
   fetchCommunityBoards: [CommunityBoard!]!
   fetchCommunityBoard(communityBoardId: String!): CommunityBoard!
   fetchComments(boardId: String!): [Comment!]!
+  fetchSavedBoards(userId: String!): [Save!]!
 }
 
 type Mutation {
@@ -92,6 +99,7 @@ type Mutation {
   deleteComment(commentId: String!): Boolean!
   uploadFile(files: [Upload!]!): [String!]!
   deleteFile(files: String!): String!
+  saveBoard(boardId: String!, userId: String!): String!
 }
 
 input CreateBoardInput {
