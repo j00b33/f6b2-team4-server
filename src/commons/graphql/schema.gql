@@ -57,10 +57,10 @@ type BoardImage {
   board: Board!
 }
 
-type CurrentRegion {
+type Save {
   id: String!
-  region: String!
-  regionDetail: String
+  board: Board!
+  user: User!
 }
 
 type Query {
@@ -87,17 +87,34 @@ type Mutation {
   updateBoardImage(image: [String!]!, board: Float!): [BoardImage!]!
   deleteBoardImage(image: String!): Boolean!
   createUser(createUserInput: CreateUserInput!): User!
-  updateUser(originalPassword: String!, updateUserInput: UpdateUserInput!): User!
+  updateUser(
+    originalPassword: String!
+    updateUserInput: UpdateUserInput!
+  ): User!
   deleteUser(id: String!): Boolean!
   emailCheck(email: String!): String!
   createCurrentRegion(currentRegionInput: CurrentRegionInput!): CurrentRegion!
-  updateCurrentRegion(UpdateCurrentRegionInput: CurrentRegionInput!, currentRegionId: String!): CurrentRegion!
+  updateCurrentRegion(
+    UpdateCurrentRegionInput: CurrentRegionInput!
+    currentRegionId: String!
+  ): CurrentRegion!
   deleteCurrentRegion(currentRegionId: String!): Boolean!
-  createCommunityBoard(createCommunityBoardInput: CreateCommunityBoardInput!): CommunityBoard!
-  updateCommunityBoard(communityBoardId: String!, updateCommunityBoardInput: UpdateCommunityBoardInput!): CommunityBoard!
+  createCommunityBoard(
+    createCommunityBoardInput: CreateCommunityBoardInput!
+  ): CommunityBoard!
+  updateCommunityBoard(
+    communityBoardId: String!
+    updateCommunityBoardInput: UpdateCommunityBoardInput!
+  ): CommunityBoard!
   deleteCommunityBoard(communityBoardId: String!): Boolean!
-  createComment(createCommentInput: CreateCommentInput!, boardId: String!): Comment!
-  updateComment(updateCommentInput: UpdateCommentInput!, commentId: String!): Comment!
+  createComment(
+    createCommentInput: CreateCommentInput!
+    boardId: String!
+  ): Comment!
+  updateComment(
+    updateCommentInput: UpdateCommentInput!
+    commentId: String!
+  ): Comment!
   deleteComment(commentId: String!): Boolean!
   uploadFile(files: [Upload!]!): [String!]!
   deleteFile(files: String!): String!
@@ -162,5 +179,7 @@ input UpdateCommentInput {
   parentCommentId: String
 }
 
-"""The `Upload` scalar type represents a file upload."""
+"""
+The `Upload` scalar type represents a file upload.
+"""
 scalar Upload
