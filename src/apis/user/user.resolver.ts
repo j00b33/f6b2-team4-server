@@ -72,4 +72,12 @@ export class UserResolver {
   emailCheck(@Args('email') email: string) {
     return this.userService.sendToken({ email });
   }
+
+  @Mutation(() => String)
+  verification(
+    @Args('email') email: string,
+    @Args('token') token: string, //
+  ) {
+    return this.userService.checkToken({ email, token });
+  }
 }

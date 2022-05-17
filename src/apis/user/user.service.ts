@@ -1,5 +1,7 @@
 import {
+  CACHE_MANAGER,
   ConflictException,
+  Inject,
   Injectable,
   UnprocessableEntityException,
 } from '@nestjs/common';
@@ -8,12 +10,16 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import axios from 'axios';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
   ) {}
 
   async findAll() {
@@ -124,6 +130,24 @@ export class UserService {
         },
       },
     );
-    return tokenNumber;
+
+    await this.cacheManager.set(
+      email, //
+      tokenNumber,
+      {
+        ttl: 1000,
+      },
+    );
+
+    return '토큰 번호 발송';
+  }
+
+  async checkToken({ email, token }) {
+    const realToken = await this.cacheManager.get(email);
+    if (realToken === token) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
