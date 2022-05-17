@@ -21,31 +21,27 @@
         // const myAmount = Number(document.getElementById("amount").value);
 
         const IMP = window.IMP; // 생략 가능
-        IMP.init("imp95628969"); // Example: imp00000000
+        IMP.init('imp13990733'); // Example: imp00000000
         IMP.request_pay(
           {
             // param
-            pg: "html5_inicis",
-            pay_method: "card",
-            name: "Mercedes-Benz",
-            merchant_uid: 69,
+            pg: 'html5_inicis',
+            pay_method: 'card',
+            name: 'Mercedes-Benz',
+            merchant_uid: 80,
             amount: myAmount,
-            buyer_email: "gildong@gmail.com",
-            buyer_name: "홍길동",
-            buyer_tel: "010-4242-4242",
-            buyer_addr: "서울특별시 강남구 신사동",
-            buyer_postcode: "01181",
-            m_redirect_url: "", // 모바일 결제후 리다이렉트될 주소!!
+            buyer_email: 'ooo@gmail.com',
+            buyer_name: 'Mavis',
+            buyer_tel: '010-7777-4444',
+            buyer_addr: '서울특별시 강남구 신사동',
+            buyer_postcode: '01181',
+            m_redirect_url: '', // 모바일 결제후 리다이렉트될 주소!!
           },
           async (rsp) => {
-            // callback
             if (rsp.success) {
-              // 결제 성공시
-              console.log(rsp);
-              //${rsp.imp_uid}
               const data = await axios
                 .post(
-                  "http://localhost:3000/graphql",
+                  'http://localhost:3000/graphql',
                   {
                     query: `
                       mutation {
@@ -58,28 +54,28 @@
                   {
                     headers: {
                       authorization:
-                        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imhpb3NpQG5hdmVyLmNvbSIsInN1YiI6ImZmMDMwN2Y1LWYxODctNGU1OC1hMzI3LTQ4ZWQ3MjQ0YmI5MSIsInByb3ZpZGVyIjoiZ3JhcGhxbCIsImlhdCI6MTY1MDI3NjQ5NCwiZXhwIjoxNjUwMzYyODk0fQ.rx3r9iNUXZ8he8j8mbwb2GWdI_JYt798r8-0ud4szbs",
+                        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imhpb3NpQG5hdmVyLmNvbSIsInN1YiI6ImZmMDMwN2Y1LWYxODctNGU1OC1hMzI3LTQ4ZWQ3MjQ0YmI5MSIsInByb3ZpZGVyIjoiZ3JhcGhxbCIsImlhdCI6MTY1MDI3NjQ5NCwiZXhwIjoxNjUwMzYyODk0fQ.rx3r9iNUXZ8he8j8mbwb2GWdI_JYt798r8-0ud4szbs',
                     },
-                  }
+                  },
                 )
-                .then(alert("결제완료"));
+                .then(alert('결제완료'));
 
               console.log(data);
             } else {
-              console.log("결제 실패");
+              console.log('결제실패');
             }
-          }
+          },
         );
       }
 
       async function cancelPay() {
         const data = await axios
           .post(
-            "http://localhost:3000/graphql",
+            'http://localhost:3000/graphql',
             {
               query: `
                 mutation {
-                  deleteTransaction(merchant_uid:69) {
+                  deleteTransaction(merchant_uid:80) {
                     id
                   }
                 }
@@ -88,11 +84,11 @@
             {
               headers: {
                 authorization:
-                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imhpb3NpQG5hdmVyLmNvbSIsInN1YiI6ImZmMDMwN2Y1LWYxODctNGU1OC1hMzI3LTQ4ZWQ3MjQ0YmI5MSIsInByb3ZpZGVyIjoiZ3JhcGhxbCIsImlhdCI6MTY1MDI3NjQ5NCwiZXhwIjoxNjUwMzYyODk0fQ.rx3r9iNUXZ8he8j8mbwb2GWdI_JYt798r8-0ud4szbs",
+                  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imhpb3NpQG5hdmVyLmNvbSIsInN1YiI6ImZmMDMwN2Y1LWYxODctNGU1OC1hMzI3LTQ4ZWQ3MjQ0YmI5MSIsInByb3ZpZGVyIjoiZ3JhcGhxbCIsImlhdCI6MTY1MDI3NjQ5NCwiZXhwIjoxNjUwMzYyODk0fQ.rx3r9iNUXZ8he8j8mbwb2GWdI_JYt798r8-0ud4szbs',
               },
-            }
+            },
           )
-          .then(alert("취소완료"));
+          .then(alert('결제 취소 완료'));
       }
     </script>
   </head>
@@ -104,10 +100,10 @@
       <br />
       <!--  //<input type="text" id="amount" /> -->
       결제 금액: 100
-      <button onclick="mypayment()">결제하기</button>
     </div>
 
     <div>
+      <button onclick="mypayment()">결제하기</button>
       <button onclick="cancelPay()">결제 취소하기</button>
     </div>
   </body>
