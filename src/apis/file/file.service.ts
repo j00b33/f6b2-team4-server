@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
 import { FileUpload } from 'graphql-upload';
 
+let count = 0;
+
 interface Ifile {
   files: FileUpload[];
 }
@@ -17,7 +19,17 @@ export class FileService {
 
     //일단 먼저 다 받기
     const waitedFiles = await Promise.all(files);
-    console.log(waitedFiles);
+
+    //URL 을 고쳐줘야 gcp 에 잘 들어간다
+    waitedFiles.forEach((el, i) => {
+      if (el.filename === '') {
+        waitedFiles.splice(i, 1);
+      }
+      const fix_file = el.filename.split('.');
+      const data_type = fix_file[fix_file.length - 1];
+      el.filename = `${count}.${data_type}`;
+      count++;
+    });
 
     const directory = await Promise.all(
       waitedFiles.map((el) => {
@@ -31,13 +43,14 @@ export class FileService {
     ); //[file,file,file,file...]
 
     const URL = 'https://storage.googleapis.com/langbeefile/';
+
     const fixedURL = directory.map((e: string) =>
       e.replace('teamproject-349902/', URL),
     );
     const final_directory = directory.map((e: string) =>
       e.replace('teamproject-349902/', ''),
     );
-    const results = final_directory.concat(fixedURL);
+    const results = ['GCPdirectory:', ...final_directory, 'URL:', ...fixedURL];
 
     return results;
   }
