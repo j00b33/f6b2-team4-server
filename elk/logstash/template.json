@@ -1,0 +1,35 @@
+{
+  "template": "*",
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_ngram_analyzer": {
+          "tokenizer": "my_ngram_tokenizer",
+          "filter": ["lowercase", "my_stop"]
+        }
+      },
+      "tokenizer": {
+        "my_ngram_tokenizer": {
+          "type": "nGram",
+          "min_gram": "1",
+          "max_gram": "10"
+        }
+      },
+      "filter": {
+        "my_stop": {
+          "type": "stop",
+          "stopwords": ["the", "in", "..."]
+        }
+      }
+    },
+    "max_ngram_diff": "20"
+  },
+  "mappings": {
+    "properties": {
+      "content": {
+        "type": "text",
+        "analyzer": "my_ngram_analyzer"
+      }
+    }
+  }
+}

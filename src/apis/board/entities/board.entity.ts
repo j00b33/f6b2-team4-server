@@ -42,6 +42,5 @@ export class Board {
   deletedAt: Date;
 
   @UpdateDateColumn()
-  @Field(() => Date)
   updatedAt: Date;
 }

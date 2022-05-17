@@ -21,7 +21,6 @@ type Board {
   writer: User!
   createdAt: DateTime!
   deletedAt: DateTime!
-  updatedAt: DateTime!
 }
 
 """
@@ -91,6 +90,7 @@ type Query {
   fetchCommunityBoard(communityBoardId: String!): CommunityBoard!
   fetchComments(boardId: String!): [Comment!]!
   fetchSavedBoards(userId: String!): [Save!]!
+  searchBoardContent(content: String!): [Board!]!
 }
 
 type Mutation {
