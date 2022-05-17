@@ -99,7 +99,7 @@ export class UserService {
     const XSecretKey = process.env.EMAIL_X_SECRETE_KEY;
     const sender = process.env.EMAIL_SENDER;
 
-    const tokenNumber = String(Math.floor(Math.random() * (10 * 6))).padStart(
+    const tokenNumber = String(Math.floor(Math.random() * 1000000)).padStart(
       6,
       '0',
     );
