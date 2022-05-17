@@ -11,6 +11,7 @@ export class SaveResolver {
     return this.saveService.fetch({ userId });
   }
 
+  //이부분을 고치자
   @Mutation(() => String)
   saveBoard(
     @Args('boardId') boardId: string, //

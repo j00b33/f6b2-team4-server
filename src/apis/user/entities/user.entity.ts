@@ -32,7 +32,7 @@ export class User {
   @Field(() => String)
   password: string;
 
-  @Column()
+  @Column({ default: 0 })
   @Field(() => Int)
   points: number;
 
