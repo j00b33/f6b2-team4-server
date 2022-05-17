@@ -10,6 +10,7 @@ type User {
   newLang: String!
   image: String!
   password: String!
+  points: Int!
 }
 
 type Board {
@@ -63,6 +64,21 @@ type Save {
   user: User!
 }
 
+type Receipt {
+  id: String!
+  impUid: String!
+  point: Int!
+  price: Int!
+  purchasedAt: DateTime!
+  user: User!
+  status: RECEIPT_STATUS_ENUM!
+}
+
+enum RECEIPT_STATUS_ENUM {
+  PURCHASED
+  CANCELLED
+}
+
 type Query {
   fetchBoards: [Board!]!
   fetchBoard(boardId: String!): Board!
@@ -100,6 +116,8 @@ type Mutation {
   uploadFile(files: [Upload!]!): [String!]!
   deleteFile(files: String!): String!
   saveBoard(boardId: String!, userId: String!): String!
+  createReceipt(impUid: String!, price: Float!): Receipt!
+  deleteReceipt(impUid: String!, price: Float!): Receipt!
 }
 
 input CreateBoardInput {

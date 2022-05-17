@@ -1,11 +1,5 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -37,6 +31,10 @@ export class User {
   @Column()
   @Field(() => String)
   password: string;
+
+  @Column()
+  @Field(() => Int)
+  points: number;
 
   //   @JoinColumn()
   //   @OneToOne(() => CurrentRegion)

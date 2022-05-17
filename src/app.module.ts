@@ -15,6 +15,7 @@ import { FileModule } from './apis/file/file.module';
 import { BoardImageModule } from './apis/boardImage/boardImage.module';
 import { SaveModule } from './apis/save/save.module';
 import { CurrentRegion } from './apis/currentRegion/entities/currentRegion.entity';
+import { ReceiptModule } from './apis/receipt/receipt.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CurrentRegion } from './apis/currentRegion/entities/currentRegion.entit
     CurrentRegion,
     FileModule,
     SaveModule,
+    ReceiptModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       cors: {
