@@ -15,7 +15,11 @@ import { FileModule } from './apis/file/file.module';
 import { BoardImageModule } from './apis/boardImage/boardImage.module';
 import { SaveModule } from './apis/save/save.module';
 import { CurrentRegion } from './apis/currentRegion/entities/currentRegion.entity';
+
 import { SearchModule } from './apis/search/search.module';
+
+import { ReceiptModule } from './apis/receipt/receipt.module';
+
 
 @Module({
   imports: [
@@ -29,6 +33,7 @@ import { SearchModule } from './apis/search/search.module';
     FileModule,
     SaveModule,
     SearchModule,
+    ReceiptModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       cors: {
