@@ -25,36 +25,57 @@ export class SaveService {
     });
   }
 
-  async save({ boardId, userId }) {
-    const boardID = await this.boardRepository.findOne({
-      id: boardId,
+  async save({ boardId, currentUser }) {
+    const savedBoard = await this.saveRepository.findOne({
+      where: { board: boardId, user: currentUser },
     });
 
-    const userID = await this.userRepository.findOne({
-      id: userId,
-    });
-
-    const existingUser = await this.saveRepository.findOne({
-      user: userId,
-    });
-
-    const existingBoard = await this.saveRepository.findOne({
-      board: boardId,
-    });
-
-    if (existingUser) {
-      if (existingBoard) {
-        await this.saveRepository.delete({
-          board: boardID,
-        });
-        return '게시물 저장이 취소되었습니다';
-      }
+    if (savedBoard && savedBoard.isSaved === true) {
+      await this.saveRepository.save({
+        ...savedBoard,
+        isSaved: false,
+      });
+      return 'Board Save Canceled';
+    } else if (savedBoard && savedBoard.isSaved === false) {
+      await this.saveRepository.save({
+        ...savedBoard,
+        isSaved: true,
+      });
+      return 'Board Saved';
     }
 
     await this.saveRepository.save({
-      user: userID,
-      board: boardID,
+      user: currentUser,
+      board: boardId,
+      isSaved: true,
     });
-    return '게시물이 저장되었습니다';
+    return 'Board Saved';
+  }
+
+  async like({ boardId, currentUser }) {
+    const likedBoard = await this.saveRepository.findOne({
+      where: { board: boardId, user: currentUser },
+    });
+
+    if (likedBoard && likedBoard.isLiked === true) {
+      await this.saveRepository.save({
+        ...likedBoard,
+        isLiked: false,
+      });
+      return 'Board Like Canceled';
+    } else if (likedBoard && likedBoard.isLiked === false) {
+      await this.saveRepository.save({
+        ...likedBoard,
+        isLiked: true,
+      });
+      return 'Board Liked';
+    }
+
+    await this.saveRepository.save({
+      user: currentUser,
+      board: boardId,
+      isLiked: true,
+    });
+    return 'Board Liked';
   }
 }
