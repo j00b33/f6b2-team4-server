@@ -17,6 +17,8 @@ import { SaveModule } from './apis/save/save.module';
 import { CurrentRegion } from './apis/currentRegion/entities/currentRegion.entity';
 import { SearchModule } from './apis/search/search.module';
 import { ReceiptModule } from './apis/receipt/receipt.module';
+import { LikeCommentModule } from './apis/likeComment/likeComment.module';
+import { LikeCommunityBoard } from './apis/likeCommunityBoard/entities/likeCommunity.entity';
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { ReceiptModule } from './apis/receipt/receipt.module';
     SaveModule,
     SearchModule,
     ReceiptModule,
+    LikeCommentModule,
+    LikeCommunityBoard,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       cors: {

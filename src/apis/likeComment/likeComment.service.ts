@@ -1,0 +1,50 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Comment } from '../comment/entities/comment.entity';
+import { User } from '../user/entities/user.entity';
+import { LikeComment } from './entities/likeComment.entity';
+
+@Injectable()
+export class LikeCommentService {
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+
+    @InjectRepository(Comment)
+    private readonly commentRepository: Repository<Comment>,
+
+    @InjectRepository(LikeComment)
+    private readonly likeCommentRepository: Repository<LikeComment>,
+  ) {}
+
+  async like({ commentId, currentUser }) {
+    const likedComment = await this.likeCommentRepository.findOne({
+      where: {
+        comment: commentId,
+        user: currentUser,
+      },
+    });
+
+    if (likedComment && likedComment.isLiked === true) {
+      await this.likeCommentRepository.save({
+        ...likedComment,
+        isLiked: false,
+      });
+      return 'Comment Like Canceled';
+    } else if (likedComment && likedComment.isLiked === false) {
+      await this.likeCommentRepository.save({
+        ...likedComment,
+        isLiked: true,
+      });
+      return 'Comment Liked';
+    }
+
+    await this.likeCommentRepository.save({
+      user: currentUser,
+      comment: commentId,
+      isLiked: true,
+    });
+    return 'Comment Liked';
+  }
+}
