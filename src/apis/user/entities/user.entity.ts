@@ -1,5 +1,13 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { CurrentRegion } from 'src/apis/currentRegion/entities/currentRegion.entity';
+import {
+  Column,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -36,7 +44,10 @@ export class User {
   @Field(() => Int)
   points: number;
 
-  //   @JoinColumn()
-  //   @OneToOne(() => CurrentRegion)
-  //   currentRegion: CurrentRegion;
+  @DeleteDateColumn()
+  deletedAt: Date;
+
+  @JoinColumn()
+  @OneToOne(() => CurrentRegion)
+  currentRegion: CurrentRegion;
 }
