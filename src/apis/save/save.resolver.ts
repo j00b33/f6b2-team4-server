@@ -1,4 +1,7 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';
+import { CurrentUser, ICurrentUser } from 'src/commons/auth/gql-user.param';
 import { Save } from './entities/save.entity';
 import { SaveService } from './save.service';
 
@@ -11,12 +14,21 @@ export class SaveResolver {
     return this.saveService.fetch({ userId });
   }
 
-  //이부분을 고치자
+  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => String)
   saveBoard(
-    @Args('boardId') boardId: string, //
-    @Args('userId') userId: string,
+    @Args('boardId') boardId: string,
+    @CurrentUser() currentUser: ICurrentUser,
   ) {
-    return this.saveService.save({ boardId, userId });
+    return this.saveService.save({ boardId, currentUser });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => String)
+  likeBoard(
+    @Args('boardId') boardId: string,
+    @CurrentUser() currentUser: ICurrentUser,
+  ) {
+    return this.saveService.like({ boardId, currentUser });
   }
 }

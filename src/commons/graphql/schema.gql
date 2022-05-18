@@ -61,6 +61,8 @@ type Save {
   id: String!
   board: Board!
   user: User!
+  isSaved: Boolean!
+  isLiked: Boolean!
 }
 
 type Receipt {
@@ -116,7 +118,8 @@ type Mutation {
   deleteComment(commentId: String!): Boolean!
   uploadFile(files: [Upload!]!): [String!]!
   deleteFile(files: String!): String!
-  saveBoard(boardId: String!, userId: String!): String!
+  saveBoard(boardId: String!): String!
+  likeBoard(boardId: String!): String!
   createReceipt(impUid: String!, price: Float!): Receipt!
   deleteReceipt(impUid: String!, price: Float!): Receipt!
 }

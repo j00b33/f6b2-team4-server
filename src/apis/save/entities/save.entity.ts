@@ -17,4 +17,12 @@ export class Save {
   @ManyToOne(() => User)
   @Field(() => User)
   user: User;
+
+  @Column({ default: false })
+  @Field(() => Boolean)
+  isSaved: boolean;
+
+  @Column({ default: false })
+  @Field(() => Boolean)
+  isLiked: boolean;
 }
