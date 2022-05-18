@@ -42,8 +42,9 @@ import { ReceiptModule } from './apis/receipt/receipt.module';
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      // host: '10.127.112.4',
-      host: 'my-database',
+      // host: '10.127.112.4', //team04backend.shop
+      host: '172.27.48.3', //hiosi123.shop
+      // host: 'my-database',
       port: 3306,
       username: 'root',
       password: 'root',
@@ -54,8 +55,9 @@ import { ReceiptModule } from './apis/receipt/receipt.module';
     }),
     CacheModule.register<RedisClientOptions>({
       store: redisStore,
-      url: 'redis://my-redis:6379',
-      // url: 'redis://:oj4tpyWX@10.140.0.3:6379',
+      // url: 'redis://my-redis:6379',
+      // url: 'redis://:oj4tpyWX@10.140.0.3:6379', //team04backend.shop
+      url: 'redis://:NvUF5Lwg@10.140.0.2:6379', //hiosi123.shop
       isGlobal: true,
     }),
   ],
