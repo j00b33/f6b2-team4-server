@@ -133,7 +133,6 @@ type Mutation {
   createReceipt(impUid: String!, price: Float!): Receipt!
   deleteReceipt(impUid: String!, price: Float!): Receipt!
   likeComment(commentId: String!): String!
-
 }
 
 input CreateBoardInput {
