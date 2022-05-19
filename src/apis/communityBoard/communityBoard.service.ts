@@ -15,9 +15,11 @@ export class CommunityBoardService {
   ) {}
 
   async findAll() {
-    return this.communityBoardRepository.find({
-      relations: ['writer'],
-    });
+    return this.communityBoardRepository
+      .createQueryBuilder('communityboard')
+      .leftJoinAndSelect('communityboard.writer', 'user')
+      .orderBy('communityboard.createdat', 'DESC')
+      .getMany();
   }
 
   async findOne({ communityBoardId }) {

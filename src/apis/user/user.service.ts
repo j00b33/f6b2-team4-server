@@ -95,8 +95,8 @@ export class UserService {
     return await this.userRepository.save(newUser);
   }
 
-  async delete({ userId }) {
-    const result = await this.userRepository.softDelete({ id: userId });
+  async delete({ currentUser }) {
+    const result = await this.userRepository.softDelete({ id: currentUser });
     return result.affected ? true : false;
   }
 
