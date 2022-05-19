@@ -132,7 +132,8 @@ type Mutation {
   likeBoard(boardId: String!): String!
   createReceipt(impUid: String!, price: Float!): Receipt!
   deleteReceipt(impUid: String!, price: Float!): Receipt!
-  likeCommunityBoard(commentId: String!): String!
+  likeComment(commentId: String!): String!
+
 }
 
 input CreateBoardInput {

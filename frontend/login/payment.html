@@ -27,7 +27,9 @@
             // param
             pg: 'html5_inicis',
             pay_method: 'card',
-            name: 'Mercedes-Benz',
+
+            name: 'LangB 10 Point',
+
             amount: myAmount,
             buyer_email: 'ooo@gmail.com',
             buyer_name: 'Mavis',
@@ -44,7 +46,9 @@
                   {
                     query: `
                       mutation {
-                        createPointTransaction(impUid: "${rsp.imp_uid}", amount: ${rsp.paid_amount}, ) {
+
+                        createReceipt(impUid: "${rsp.imp_uid}", price: ${rsp.paid_amount}, ) {
+
                           id
                         }
                       }
@@ -53,7 +57,7 @@
                   {
                     headers: {
                       authorization:
-                        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imhpb3NpQG5hdmVyLmNvbSIsInN1YiI6ImZmMDMwN2Y1LWYxODctNGU1OC1hMzI3LTQ4ZWQ3MjQ0YmI5MSIsInByb3ZpZGVyIjoiZ3JhcGhxbCIsImlhdCI6MTY1MDI3NjQ5NCwiZXhwIjoxNjUwMzYyODk0fQ.rx3r9iNUXZ8he8j8mbwb2GWdI_JYt798r8-0ud4szbs',
+                        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBqb29iZWVAZ21haWwuY29tIiwic3ViIjoiZjk3OGU4NTgtODY4NC00NmU1LTk1MDItOTM4ZmQwNTdiOGJkIiwiaWF0IjoxNjUyOTQ1MDQxLCJleHAiOjE2NTI5NDg2NDF9.V256mKDEFqM_6UzYy4Ep5_SnxtgM3H9LE_yOpQV57Fk',
                     },
                   },
                 )
@@ -74,7 +78,7 @@
             {
               query: `
                 mutation {
-                  deleteTransaction(merchant_uid:80) {
+                  deleteReceipt(impUid: "imp_835167542165", price: 100,) {
                     id
                   }
                 }
@@ -83,7 +87,7 @@
             {
               headers: {
                 authorization:
-                  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imhpb3NpQG5hdmVyLmNvbSIsInN1YiI6ImZmMDMwN2Y1LWYxODctNGU1OC1hMzI3LTQ4ZWQ3MjQ0YmI5MSIsInByb3ZpZGVyIjoiZ3JhcGhxbCIsImlhdCI6MTY1MDI3NjQ5NCwiZXhwIjoxNjUwMzYyODk0fQ.rx3r9iNUXZ8he8j8mbwb2GWdI_JYt798r8-0ud4szbs',
+                  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBqb29iZWVAZ21haWwuY29tIiwic3ViIjoiZjk3OGU4NTgtODY4NC00NmU1LTk1MDItOTM4ZmQwNTdiOGJkIiwiaWF0IjoxNjUyOTQ1MDQxLCJleHAiOjE2NTI5NDg2NDF9.V256mKDEFqM_6UzYy4Ep5_SnxtgM3H9LE_yOpQV57Fk',
               },
             },
           )
@@ -94,7 +98,7 @@
   <body>
     <div>
       <img src =
-      https://di-uploads-development.dealerinspire.com/mercedesbenzofbuffalo/uploads/2017/10/3e443c027108d195f98006721cf9fc00x.jpg
+      https://t3.ftcdn.net/jpg/02/60/33/54/360_F_260335426_HDv85LLqhTWofR8sFC7ZKVYtplNJrfBy.jpg
       width =400 height = 300>
       <br />
       <!--  //<input type="text" id="amount" /> -->
