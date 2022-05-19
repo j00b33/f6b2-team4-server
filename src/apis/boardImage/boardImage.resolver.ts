@@ -24,7 +24,6 @@ export class BoardImageResolver {
   }
 
   @UseGuards(GqlAuthAccessGuard)
-  @Query(() => [BoardImage])
   @Mutation(() => [BoardImage])
   createBoardImage(
     @Args({ name: 'image', type: () => [String] }) image: string[],

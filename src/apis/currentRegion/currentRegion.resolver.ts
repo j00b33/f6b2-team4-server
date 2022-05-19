@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { CurrentRegionService } from './currentRegion.service';
 import { CurrentRegionInput } from './dto/createCurrentRegion.input';
 import { CurrentRegion } from './entities/currentRegion.entity';
