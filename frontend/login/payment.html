@@ -28,7 +28,6 @@
             pg: 'html5_inicis',
             pay_method: 'card',
             name: 'Mercedes-Benz',
-            merchant_uid: 80,
             amount: myAmount,
             buyer_email: 'ooo@gmail.com',
             buyer_name: 'Mavis',
@@ -45,7 +44,7 @@
                   {
                     query: `
                       mutation {
-                        createPointTransaction(impUid: "${rsp.imp_uid}", amount: ${rsp.paid_amount}, merchant_uid: ${rsp.merchant_uid}, ) {
+                        createPointTransaction(impUid: "${rsp.imp_uid}", amount: ${rsp.paid_amount}, ) {
                           id
                         }
                       }

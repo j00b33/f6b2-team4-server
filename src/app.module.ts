@@ -19,6 +19,7 @@ import { SearchModule } from './apis/search/search.module';
 import { ReceiptModule } from './apis/receipt/receipt.module';
 import { LikeCommentModule } from './apis/likeComment/likeComment.module';
 import { LikeCommunityBoard } from './apis/likeCommunityBoard/entities/likeCommunity.entity';
+import { CurrentRegionModule } from './apis/currentRegion/currentRegion.module';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { LikeCommunityBoard } from './apis/likeCommunityBoard/entities/likeCommu
     UserModule,
     CommunityBoardModule,
     CommentModule,
-    CurrentRegion,
+    CurrentRegionModule,
     FileModule,
     SaveModule,
     SearchModule,
