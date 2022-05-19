@@ -64,8 +64,8 @@ export class UserResolver {
 
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Boolean)
-  deleteUser(@Args('id') userId: string) {
-    return this.userService.delete({ userId });
+  deleteUser(@CurrentUser() currentUser: any) {
+    return this.userService.delete({ currentUser });
   }
 
   @Mutation(() => String)

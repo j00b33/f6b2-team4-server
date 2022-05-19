@@ -15,7 +15,11 @@ export class BoardService {
   ) {}
 
   async findAll() {
-    return this.boardRepository.find({ relations: ['writer'] });
+    return await this.boardRepository
+      .createQueryBuilder('board')
+      .leftJoinAndSelect('board.writer', 'user')
+      .orderBy('board.createdat', 'DESC')
+      .getMany();
   }
 
   async findOne({ boardId }) {

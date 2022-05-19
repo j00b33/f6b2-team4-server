@@ -114,7 +114,7 @@ type Mutation {
   deleteBoardImage(image: String!): Boolean!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(originalPassword: String!, updateUserInput: UpdateUserInput!): User!
-  deleteUser(id: String!): Boolean!
+  deleteUser: Boolean!
   emailCheck(email: String!): String!
   verification(email: String!, token: String!): String!
   createCommunityBoard(createCommunityBoardInput: CreateCommunityBoardInput!): CommunityBoard!
