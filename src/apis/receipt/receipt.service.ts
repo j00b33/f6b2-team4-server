@@ -20,6 +20,12 @@ export class ReceiptService {
     private readonly connection: Connection,
   ) {}
 
+  async findAll({ currentUser }) {
+    return await this.receiptRepository.find({
+      where: { user: currentUser },
+    });
+  }
+
   async create({ impUid, currentUser, price }) {
     const IAccessToken = await this.iamportService.getAccessToken();
 
