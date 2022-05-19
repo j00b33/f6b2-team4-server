@@ -43,12 +43,12 @@ export class SearchResolver {
   async searchCommnunityContent(
     @Args('content') content: string, //
   ) {
-    //1. 레디스에서 들고온다
-    // const redisGet = await this.searchService.redisGetAll({ content });
-    // if (redisGet) {
-    //   console.log('😇from redis');
-    //   return redisGet;
-    // }
+    // 1. 레디스에서 들고온다
+    const redisGet = await this.searchService.redisGetAll({ content });
+    if (redisGet) {
+      console.log('😇from redis');
+      return redisGet;
+    }
 
     //2. 레디스에 없으면 일라스틱에서 들고옴
     const elasticGet = await this.searchService.elasticSearchCommnuinity({
