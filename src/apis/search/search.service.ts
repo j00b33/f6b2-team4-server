@@ -26,6 +26,16 @@ export class SearchService {
     return result;
   }
 
+  async elasticSearchCommnuinity({ content }) {
+    const result = await this.elasticsearchService.search({
+      index: 'communitycontent',
+      query: {
+        match: { content: content },
+      },
+    });
+    return result;
+  }
+
   async redisSaveAll({ content, values }) {
     await this.cacheManager.set(
       content, //

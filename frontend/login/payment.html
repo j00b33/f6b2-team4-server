@@ -27,8 +27,9 @@
             // param
             pg: 'html5_inicis',
             pay_method: 'card',
+
             name: 'LangB 10 Point',
-            // merchant_uid: 123456,
+
             amount: myAmount,
             buyer_email: 'ooo@gmail.com',
             buyer_name: 'Mavis',
@@ -45,7 +46,9 @@
                   {
                     query: `
                       mutation {
+
                         createReceipt(impUid: "${rsp.imp_uid}", price: ${rsp.paid_amount}, ) {
+
                           id
                         }
                       }

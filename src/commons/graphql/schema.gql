@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CurrentRegion {
+  id: String!
+  region: String!
+  regionDetail: String
+}
+
 type User {
   id: String!
   name: String!
@@ -93,6 +99,7 @@ type Query {
   fetchComments(boardId: String!): [Comment!]!
   fetchSavedBoards(userId: String!): [Save!]!
   searchBoardContent(content: String!): [Board!]!
+  searchCommnunityContent(content: String!): [CommunityBoard!]!
 }
 
 type Mutation {
@@ -116,6 +123,9 @@ type Mutation {
   createComment(createCommentInput: CreateCommentInput!, boardId: String!): Comment!
   updateComment(updateCommentInput: UpdateCommentInput!, commentId: String!): Comment!
   deleteComment(commentId: String!): Boolean!
+  createCurrentRegion(currentRegionInput: CurrentRegionInput!): CurrentRegion!
+  updateCurrentRegion(UpdateCurrentRegionInput: CurrentRegionInput!, currentRegionId: String!): CurrentRegion!
+  deleteCurrentRegion(currentRegionId: String!): Boolean!
   uploadFile(files: [Upload!]!): [String!]!
   deleteFile(files: String!): String!
   saveBoard(boardId: String!): String!
@@ -123,6 +133,7 @@ type Mutation {
   createReceipt(impUid: String!, price: Float!): Receipt!
   deleteReceipt(impUid: String!, price: Float!): Receipt!
   likeComment(commentId: String!): String!
+
 }
 
 input CreateBoardInput {
@@ -177,6 +188,11 @@ input UpdateCommentInput {
   image: String
   video: String
   parentCommentId: String
+}
+
+input CurrentRegionInput {
+  region: String!
+  regionDetail: String!
 }
 
 """The `Upload` scalar type represents a file upload."""
