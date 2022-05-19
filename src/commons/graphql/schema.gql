@@ -100,6 +100,7 @@ type Query {
   fetchSavedBoards(userId: String!): [Save!]!
   searchBoardContent(content: String!): [Board!]!
   searchCommnunityContent(content: String!): [CommunityBoard!]!
+  fetchReceipts: [Receipt!]!
 }
 
 type Mutation {
