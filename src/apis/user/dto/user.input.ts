@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { CurrentRegionInput } from 'src/apis/currentRegion/dto/createCurrentRegion.input';
 
 @InputType()
 export class CreateUserInput {
@@ -19,4 +20,7 @@ export class CreateUserInput {
 
   @Field(() => String)
   newLang: string;
+
+  @Field(() => CurrentRegionInput)
+  currentRegion: CurrentRegionInput;
 }

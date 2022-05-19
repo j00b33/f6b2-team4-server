@@ -5,7 +5,7 @@ import {
   DeleteDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -48,6 +48,6 @@ export class User {
   deletedAt: Date;
 
   @JoinColumn()
-  @OneToOne(() => CurrentRegion)
+  @ManyToOne(() => CurrentRegion)
   currentRegion: CurrentRegion;
 }

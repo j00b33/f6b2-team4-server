@@ -10,6 +10,10 @@ export class CurrentRegionService {
     private readonly currentRegionRepository: Repository<CurrentRegion>,
   ) {}
 
+  async findAll() {
+    return await this.currentRegionRepository.find();
+  }
+
   async create({ currentRegionInput }) {
     await this.currentRegionRepository.save({ ...currentRegionInput });
   }
