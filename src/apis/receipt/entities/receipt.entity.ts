@@ -28,7 +28,7 @@ export class Receipt {
   @Field(() => String)
   impUid: string;
 
-  @Column()
+  @Column({ default: 0 })
   @Field(() => Int)
   point: number;
 
