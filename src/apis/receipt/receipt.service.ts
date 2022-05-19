@@ -23,12 +23,17 @@ export class ReceiptService {
   async create({ impUid, currentUser, price }) {
     const IAccessToken = await this.iamportService.getAccessToken();
 
+    const IamportInformation = await this.iamportService.checkImpUid({
+      IAccessToken,
+      impUid,
+    });
+
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect(); // now, queryRunner is available
     await queryRunner.startTransaction('SERIALIZABLE'); // Transaction Start =======>
 
     try {
-      if (IAccessToken.amount !== price) {
+      if (IamportInformation.amount !== price) {
         await this.iamportService.cancelOrderWithUid({ IAccessToken, impUid });
         throw new UnprocessableEntityException(
           '지불한 가격과, 포인트 가격이 일치하지 않습니다',
@@ -70,6 +75,11 @@ export class ReceiptService {
 
   async refund({ impUid, price, currentUser }) {
     const IAccessToken = await this.iamportService.getAccessToken();
+
+    const IamportInformation = await this.iamportService.checkImpUid({
+      IAccessToken,
+      impUid,
+    });
 
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect(); // now, queryRunner is available
@@ -125,7 +135,8 @@ export class ReceiptService {
       // 환불 결과
       const result = this.receiptRepository.create({
         impUid,
-        price,
+        price: IamportInformation.amount,
+        point: IamportInformation.amount / 10,
         user: userData,
         status: RECEIPT_STATUS_ENUM.CANCELLED,
       });

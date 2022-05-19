@@ -1,4 +1,8 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import axios from 'axios';
 
 @Injectable()
@@ -49,5 +53,32 @@ export class IamportService {
       },
     });
     console.log('canceled order');
+  }
+
+  async checkImpUid({ IAccessToken, impUid }) {
+    let fromImport;
+    try {
+      fromImport = await axios({
+        url: `https://api.iamport.kr/payments/${impUid}`,
+        method: 'get', // GET method
+        headers: {
+          'Content-Type': 'application/json', // "Content-Type": "application/json"
+          Authorization: `Bearer ${IAccessToken}`, // 발행된 액세스 토큰
+        },
+      });
+    } catch (error) {
+      if (error.response.status === 409) {
+        console.log('409!!');
+        throw new ConflictException('impUid 주문 번호가 일치하지 않습니다');
+      }
+    }
+    // .catch((error) => {
+    //   this.cancelOrderWithUid({ accessToken, impUid });
+    //   console.log(error);
+    // });
+    console.log(fromImport);
+    console.log('authorized impUid');
+
+    return fromImport.data.response;
   }
 }

@@ -10,7 +10,7 @@ export class LikeCommentResolver {
 
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => String)
-  likeCommunityBoard(
+  likeComment(
     @Args('commentId') commentId: string,
     @CurrentUser() currentUser: ICurrentUser,
   ) {
