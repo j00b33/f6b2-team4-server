@@ -14,7 +14,15 @@ export class CommunityBoardService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async findAll({ userId }) {
+  async findAll() {
+    return await this.communityBoardRepository
+      .createQueryBuilder('communityboard')
+      .leftJoinAndSelect('communityboard.writer', 'user')
+      .orderBy('communityboard.createdat', 'DESC')
+      .getMany();
+  }
+
+  async findAllId({ userId }) {
     return await this.communityBoardRepository
       .createQueryBuilder('communityboard')
       .where('communityboard.writer.id = :id', { id: userId })

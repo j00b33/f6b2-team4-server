@@ -88,7 +88,8 @@ enum RECEIPT_STATUS_ENUM {
 }
 
 type Query {
-  fetchBoards(userId: String!): [Board!]!
+  fetchBoards: [Board!]!
+  fetchBoardsbyUser(userId: String!): [Board!]!
   fetchMyBoards: [Board!]!
   fetchBoard(boardId: String!): Board!
   fetchBoardImages: [BoardImage!]!
@@ -96,7 +97,8 @@ type Query {
   fetchUsers: [User!]!
   fetchUser: User!
   fetchUserId(userId: String!): User!
-  fetchCommunityBoards(userId: String!): [CommunityBoard!]!
+  fetchCommnuityBoards: [CommunityBoard!]!
+  fetchCommunityBoardbyUser(userId: String!): [CommunityBoard!]!
   fetchMyCommunityBoards: [CommunityBoard!]!
   fetchCommunityBoard(communityBoardId: String!): CommunityBoard!
   fetchComments(boardId: String!): [Comment!]!
@@ -153,12 +155,12 @@ input UpdateBoardInput {
 
 input CreateUserInput {
   name: String!
-  image: String!
+  image: String
   email: String!
   password: String!
   myLang: String!
   newLang: String!
-  currentRegion: String!
+  currentRegion: String
 }
 
 input UpdateUserInput {
