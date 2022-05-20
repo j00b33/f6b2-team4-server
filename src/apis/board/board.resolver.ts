@@ -12,8 +12,13 @@ export class BoardResolver {
   constructor(private readonly boardService: BoardService) {}
 
   @Query(() => [Board])
-  fetchBoards(@Args('userId') userId: string) {
-    return this.boardService.findAll({ userId });
+  fetchBoards() {
+    return this.boardService.findAll();
+  }
+
+  @Query(() => [Board])
+  fetchBoardsbyUser(@Args('userId') userId: string) {
+    return this.boardService.findAllId({ userId });
   }
 
   @UseGuards(GqlAuthAccessGuard)

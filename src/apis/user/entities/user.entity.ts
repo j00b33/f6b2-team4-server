@@ -32,7 +32,7 @@ export class User {
   @Field(() => String)
   newLang: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field(() => String)
   image: string;
 
