@@ -19,6 +19,7 @@ import { ReceiptModule } from './apis/receipt/receipt.module';
 import { LikeCommentModule } from './apis/likeComment/likeComment.module';
 import { LikeCommunityBoard } from './apis/likeCommunityBoard/entities/likeCommunity.entity';
 import { CurrentRegionModule } from './apis/currentRegion/currentRegion.module';
+import { LikeCommunityBoardModule } from './apis/likeCommunityBoard/likeCommunity.module';
 
 @Module({
   imports: [
@@ -33,8 +34,8 @@ import { CurrentRegionModule } from './apis/currentRegion/currentRegion.module';
     SaveModule,
     SearchModule,
     ReceiptModule,
+    LikeCommunityBoardModule,
     LikeCommentModule,
-    LikeCommunityBoard,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       cors: {
@@ -47,8 +48,8 @@ import { CurrentRegionModule } from './apis/currentRegion/currentRegion.module';
     TypeOrmModule.forRoot({
       type: 'mysql',
       // host: 'my-database', // localhost
-      // host: '10.127.112.4', //team04backend.shop
-      host: '172.27.48.3', //hiosi123.shop
+      host: '10.127.112.4', //team04backend.shop
+      // host: '172.27.48.3', //hiosi123.shop
       port: 3306,
       username: 'root',
       password: 'root',
@@ -60,8 +61,8 @@ import { CurrentRegionModule } from './apis/currentRegion/currentRegion.module';
     CacheModule.register<RedisClientOptions>({
       store: redisStore,
       // url: 'redis://my-redis:6379', // localhost
-      // url: 'redis://:oj4tpyWX@10.140.0.3:6379', //team04backend.shop
-      url: 'redis://:NvUF5Lwg@10.140.0.2:6379', //hiosi123.shop
+      url: 'redis://:oj4tpyWX@10.140.0.3:6379', //team04backend.shop
+      // url: 'redis://:NvUF5Lwg@10.140.0.2:6379', //hiosi123.shop
       isGlobal: true,
     }),
   ],

@@ -19,6 +19,10 @@ export class LikeCommentService {
   ) {}
 
   async like({ commentId, currentUser }) {
+    const comment = await this.commentRepository.findOne({
+      where: { id: commentId },
+    });
+
     const likedComment = await this.likeCommentRepository.findOne({
       where: {
         comment: commentId,
@@ -31,11 +35,29 @@ export class LikeCommentService {
         ...likedComment,
         isLiked: false,
       });
+      await this.commentRepository.save({
+        where: {
+          writer: {
+            id: comment.id,
+          },
+        },
+        ...comment,
+        likes: comment.likes - 1,
+      });
       return 'Comment Like Canceled';
     } else if (likedComment && likedComment.isLiked === false) {
       await this.likeCommentRepository.save({
         ...likedComment,
         isLiked: true,
+      });
+      await this.commentRepository.save({
+        where: {
+          writer: {
+            id: comment.id,
+          },
+        },
+        ...comment,
+        likes: comment.likes + 1,
       });
       return 'Comment Liked';
     }
@@ -44,6 +66,15 @@ export class LikeCommentService {
       user: currentUser,
       comment: commentId,
       isLiked: true,
+    });
+    await this.commentRepository.save({
+      where: {
+        writer: {
+          id: comment.id,
+        },
+      },
+      ...comment,
+      likes: comment.likes + 1,
     });
     return 'Comment Liked';
   }

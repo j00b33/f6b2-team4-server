@@ -49,5 +49,6 @@ export class User {
 
   @JoinColumn()
   @ManyToOne(() => CurrentRegion)
+  @Field(() => CurrentRegion)
   currentRegion: CurrentRegion;
 }

@@ -14,12 +14,23 @@ export class CommunityBoardService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async findAll() {
-    return this.communityBoardRepository
+  async findAll({ userId }) {
+    return await this.communityBoardRepository
       .createQueryBuilder('communityboard')
+      .where('communityboard.writer.id = :id', { id: userId })
       .leftJoinAndSelect('communityboard.writer', 'user')
       .orderBy('communityboard.createdat', 'DESC')
       .getMany();
+  }
+
+  async findMyCommunity({ currentUser }) {
+    return await this.communityBoardRepository.find({
+      where: {
+        writer: {
+          id: currentUser.id,
+        },
+      },
+    });
   }
 
   async findOne({ communityBoardId }) {

@@ -17,6 +17,7 @@ type User {
   image: String!
   password: String!
   points: Int!
+  currentRegion: CurrentRegion!
 }
 
 type Board {
@@ -87,20 +88,23 @@ enum RECEIPT_STATUS_ENUM {
 }
 
 type Query {
-  fetchBoards: [Board!]!
+  fetchBoards(userId: String!): [Board!]!
+  fetchMyBoards: [Board!]!
   fetchBoard(boardId: String!): Board!
   fetchBoardImages: [BoardImage!]!
   fetchBoardImage(board: String!): [BoardImage!]!
-  createBoardImage(image: [String!]!, board: String!): [BoardImage!]!
   fetchUsers: [User!]!
   fetchUser: User!
-  fetchCommunityBoards: [CommunityBoard!]!
+  fetchUserId(userId: String!): User!
+  fetchCommunityBoards(userId: String!): [CommunityBoard!]!
+  fetchMyCommunityBoards: [CommunityBoard!]!
   fetchCommunityBoard(communityBoardId: String!): CommunityBoard!
   fetchComments(boardId: String!): [Comment!]!
   fetchSavedBoards(userId: String!): [Save!]!
   searchBoardContent(content: String!): [Board!]!
   searchCommnunityContent(content: String!): [CommunityBoard!]!
   fetchReceipts: [Receipt!]!
+  fetchMyReceipts: [Receipt!]!
 }
 
 type Mutation {
@@ -133,6 +137,7 @@ type Mutation {
   likeBoard(boardId: String!): String!
   createReceipt(impUid: String!, price: Float!): Receipt!
   deleteReceipt(impUid: String!, price: Float!): Receipt!
+  likeCommunityBoard(communityBoardId: String!): String!
   likeComment(commentId: String!): String!
 }
 
@@ -153,6 +158,7 @@ input CreateUserInput {
   password: String!
   myLang: String!
   newLang: String!
+  currentRegion: String!
 }
 
 input UpdateUserInput {
@@ -162,6 +168,7 @@ input UpdateUserInput {
   password: String
   myLang: String
   newLang: String
+  currentRegion: String
 }
 
 input CreateCommunityBoardInput {

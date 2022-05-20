@@ -26,6 +26,9 @@ export class SaveService {
   }
 
   async save({ boardId, currentUser }) {
+    const Board = await this.boardRepository.findOne({
+      where: { id: boardId },
+    });
     const savedBoard = await this.saveRepository.findOne({
       where: { board: boardId, user: currentUser },
     });
@@ -35,11 +38,30 @@ export class SaveService {
         ...savedBoard,
         isSaved: false,
       });
+      await this.boardRepository.save({
+        where: {
+          writer: {
+            id: Board.id,
+          },
+        },
+        ...Board,
+        likes: Board.likes - 1,
+      });
+
       return 'Board Save Canceled';
     } else if (savedBoard && savedBoard.isSaved === false) {
       await this.saveRepository.save({
         ...savedBoard,
         isSaved: true,
+      });
+      await this.boardRepository.save({
+        where: {
+          writer: {
+            id: Board.id,
+          },
+        },
+        ...Board,
+        likes: Board.likes + 1,
       });
       return 'Board Saved';
     }
@@ -48,6 +70,15 @@ export class SaveService {
       user: currentUser,
       board: boardId,
       isSaved: true,
+    });
+    await this.boardRepository.save({
+      where: {
+        writer: {
+          id: Board.id,
+        },
+      },
+      ...Board,
+      likes: Board.likes + 1,
     });
     return 'Board Saved';
   }
