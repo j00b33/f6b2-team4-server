@@ -26,6 +26,12 @@ export class ReceiptService {
     });
   }
 
+  async findMyAll({ currentUser }) {
+    return await this.receiptRepository.find({
+      where: { user: currentUser },
+    });
+  }
+
   async create({ impUid, currentUser, price }) {
     const IAccessToken = await this.iamportService.getAccessToken();
 

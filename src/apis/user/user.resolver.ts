@@ -35,6 +35,17 @@ export class UserResolver {
     });
   }
 
+  @UseGuards(GqlAuthAccessGuard)
+  @Query(() => User)
+  fetchUserId(
+    //@Args("writer")
+    @Args('userId') userId: string,
+  ) {
+    return this.userService.findIdOne({
+      userId,
+    });
+  }
+
   @Mutation(() => User)
   async createUser(
     @Args('createUserInput') createUserInput: CreateUserInput, //

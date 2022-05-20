@@ -21,6 +21,6 @@ export class CreateUserInput {
   @Field(() => String)
   newLang: string;
 
-  @Field(() => CurrentRegionInput)
-  currentRegion: CurrentRegionInput;
+  @Field(() => String)
+  currentRegion: string;
 }

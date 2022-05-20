@@ -16,6 +16,12 @@ export class ReceiptResolver {
   }
 
   @UseGuards(GqlAuthAccessGuard)
+  @Query(() => [Receipt])
+  async fetchMyReceipts(@CurrentUser() currentUser: ICurrentUser) {
+    return await this.receiptService.findMyAll({ currentUser });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Receipt)
   async createReceipt(
     @Args('impUid') impUid: string,

@@ -12,8 +12,16 @@ export class CommunityBoardResolver {
   constructor(private readonly communityBoardService: CommunityBoardService) {}
 
   @Query(() => [CommunityBoard])
-  fetchCommunityBoards() {
-    return this.communityBoardService.findAll();
+  fetchCommunityBoards(@Args('userId') userId: string) {
+    return this.communityBoardService.findAll({ userId });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Query(() => [CommunityBoard])
+  fetchMyCommunityBoards(
+    @CurrentUser() currentUser: ICurrentUser, //
+  ) {
+    return this.communityBoardService.findMyCommunity({ currentUser });
   }
 
   @Query(() => CommunityBoard)

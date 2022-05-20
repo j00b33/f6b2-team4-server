@@ -31,6 +31,13 @@ export class UserService {
       where: { email }, //
     });
   }
+  async findIdOne({ userId }) {
+    return await this.userRepository.findOne({
+      where: {
+        id: { userId },
+      },
+    });
+  }
 
   getWelcomeTemplate({ createUserInput }) {
     return `

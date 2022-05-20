@@ -19,6 +19,10 @@ export class LikeCommunityBoardService {
   ) {}
 
   async like({ communityBoardId, currentUser }) {
+    const CommunityBoard = await this.communityBoardRepository.findOne({
+      where: { id: communityBoardId },
+    });
+
     const likedCommunity = await this.likeCommunityBoardRepository.findOne({
       where: { communityBoard: communityBoardId, user: currentUser },
     });
@@ -28,11 +32,30 @@ export class LikeCommunityBoardService {
         ...likedCommunity,
         isLiked: false,
       });
+      await this.communityBoardRepository.save({
+        where: {
+          writer: {
+            id: CommunityBoard.id,
+          },
+        },
+        ...CommunityBoard,
+        likes: CommunityBoard.likes - 1,
+      });
+
       return 'Community Board Like Canceled';
     } else if (likedCommunity && likedCommunity.isLiked === false) {
       await this.likeCommunityBoardRepository.save({
         ...likedCommunity,
         isLiked: true,
+      });
+      await this.communityBoardRepository.save({
+        where: {
+          writer: {
+            id: CommunityBoard.id,
+          },
+        },
+        ...CommunityBoard,
+        likes: CommunityBoard.likes + 1,
       });
       return 'Community Board Liked';
     }
@@ -41,6 +64,15 @@ export class LikeCommunityBoardService {
       user: currentUser,
       communityBoard: communityBoardId,
       isLiked: true,
+    });
+    await this.communityBoardRepository.save({
+      where: {
+        writer: {
+          id: CommunityBoard.id,
+        },
+      },
+      ...CommunityBoard,
+      likes: CommunityBoard.likes + 1,
     });
     return 'Community Board Liked';
   }
