@@ -90,10 +90,16 @@ export class UserService {
     });
 
     const isAuth = await bcrypt.compare(originalPassword, user.password);
+
     if (!isAuth)
       throw new UnprocessableEntityException('암호가 일치하지 않습니다');
 
-    updateUserInput.password = await bcrypt.hash(updateUserInput.password, 10);
+    if (updateUserInput.password) {
+      updateUserInput.password = await bcrypt.hash(
+        updateUserInput.password,
+        10,
+      );
+    }
 
     const newUser = {
       ...user,
