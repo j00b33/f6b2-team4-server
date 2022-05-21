@@ -29,6 +29,10 @@ export class Board {
   @Field(() => Int)
   likes: number;
 
+  @Column({ default: 0 })
+  @Field(() => Int)
+  commentsCount: number;
+
   @ManyToOne(() => User)
   @Field(() => User)
   writer: User;

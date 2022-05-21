@@ -41,7 +41,7 @@ export class SearchService {
       content, //
       values,
       {
-        ttl: 1000,
+        ttl: 100,
       },
     );
   }

@@ -14,7 +14,42 @@ export class BoardService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async findAll() {
+  async findAll({ pageSize, page, userId }) {
+    if (page <= 0) {
+      page = 1;
+    }
+    if (pageSize && page && userId) {
+      return await this.boardRepository.find({
+        order: {
+          createdAt: 'DESC',
+        },
+        where: { writer: { id: userId } },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        relations: ['writer'],
+      });
+    }
+
+    if (pageSize && page) {
+      return await this.boardRepository.find({
+        order: {
+          createdAt: 'DESC',
+        },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        relations: ['writer'],
+      });
+    }
+    if (userId) {
+      return await this.boardRepository.find({
+        order: {
+          createdAt: 'DESC',
+        },
+        where: { writer: { id: userId } },
+        relations: ['writer'],
+      });
+    }
+
     return await this.boardRepository
       .createQueryBuilder('board')
       .leftJoinAndSelect('board.writer', 'user')
@@ -22,14 +57,27 @@ export class BoardService {
       .getMany();
   }
 
-  async findAllId({ userId }) {
-    return await this.boardRepository
-      .createQueryBuilder('board')
-      .where('board.writer.id = :id', { id: userId })
-      .leftJoinAndSelect('board.writer', 'user')
-      .orderBy('board.createdat', 'DESC')
-      .getMany();
+  async count({ userId }) {
+    if (userId) {
+      const allsaved = await this.boardRepository.count({
+        where: {
+          writer: userId,
+        },
+      });
+      return allsaved;
+    }
+
+    return (await this.boardRepository.find()).length;
   }
+
+  // async findAllId({ userId }) {
+  //   return await this.boardRepository
+  //     .createQueryBuilder('board')
+  //     .where('board.writer.id = :id', { id: userId })
+  //     .leftJoinAndSelect('board.writer', 'user')
+  //     .orderBy('board.createdat', 'DESC')
+  //     .getMany();
+  // }
 
   async findMyBoards({ currentUser }) {
     return await this.boardRepository.find({
@@ -49,6 +97,15 @@ export class BoardService {
       email: currentUser.email,
     });
 
+    await this.userRepository.update(
+      {
+        email: currentUser.email,
+      },
+      {
+        boardCounts: writer.boardCounts + 1,
+      },
+    );
+
     return await this.boardRepository.save({
       ...createBoardInput,
       writer: writer,
@@ -66,6 +123,20 @@ export class BoardService {
   }
 
   async delete({ boardId }) {
+    const findUserFromBoard = await this.boardRepository.findOne({
+      where: { writer: boardId },
+      relations: ['user'],
+    });
+
+    await this.userRepository.update(
+      {
+        email: findUserFromBoard.writer.email,
+      },
+      {
+        boardCounts: findUserFromBoard.writer.boardCounts - 1,
+      },
+    );
+
     const result = await this.boardRepository.softDelete({ id: boardId });
     return result.affected ? true : false;
   }

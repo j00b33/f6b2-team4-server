@@ -14,7 +14,43 @@ export class CommunityBoardService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async findAll() {
+  async findAll({ pageSize, page, userId }) {
+    if (page <= 0) {
+      page = 1;
+    }
+    if (pageSize && page && userId) {
+      return await this.communityBoardRepository.find({
+        order: {
+          createdAt: 'DESC',
+        },
+        where: { writer: { id: userId } },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        relations: ['writer'],
+      });
+    }
+
+    if (pageSize && page) {
+      return await this.communityBoardRepository.find({
+        order: {
+          createdAt: 'DESC',
+        },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        relations: ['writer'],
+      });
+    }
+
+    if (userId) {
+      return await this.communityBoardRepository.find({
+        order: {
+          createdAt: 'DESC',
+        },
+        where: { writer: { id: userId } },
+        relations: ['writer'],
+      });
+    }
+
     return await this.communityBoardRepository
       .createQueryBuilder('communityboard')
       .leftJoinAndSelect('communityboard.writer', 'user')
@@ -52,6 +88,20 @@ export class CommunityBoardService {
     const writer = await this.userRepository.findOne({
       email: currentUser.email,
     });
+
+    await this.userRepository.findOne({
+      email: currentUser.email,
+    });
+
+    await this.userRepository.update(
+      {
+        email: currentUser.email,
+      },
+      {
+        communityBoardCounts: writer.communityBoardCounts + 1,
+      },
+    );
+
     return await this.communityBoardRepository.save({
       ...createCommunityBoardInput,
       writer: writer,
@@ -68,6 +118,19 @@ export class CommunityBoardService {
   }
 
   async delete({ communityBoardId }) {
+    const findUserFromBoard = await this.communityBoardRepository.findOne({
+      where: { writer: communityBoardId },
+      relations: ['user'],
+    });
+
+    await this.userRepository.update(
+      {
+        email: findUserFromBoard.writer.email,
+      },
+      {
+        communityBoardCounts: findUserFromBoard.writer.communityBoardCounts - 1,
+      },
+    );
     const result = await this.communityBoardRepository.softDelete({
       id: communityBoardId,
     });

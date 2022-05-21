@@ -18,11 +18,11 @@ export class AuthService {
 
     //개발 환경
 
-    // res.setHeader('Set-Cookie', `refreshToken=${refreshToken}; path=/;`);
+    // res.setHeader('Set-Cookie', `refreshToken=${refreshToken}`);
 
     // 배포환경 이부분 뒤에 저장 , 'https://myfrontsite.com'
-    // res.setHeader('Access-Control-Allow-Origin');
-    // 배포환경;
+
+    // // 배포환경;
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader(
@@ -60,8 +60,6 @@ export class AuthService {
     //3. 로그인
     this.setRefreshToken({ user, res });
     // 여기로 온다
-    res.redirect(
-      'http://localhost:5500/homework/main-project/frontend/login/index.html',
-    );
+    res.redirect('http://localhost:5501/frontend/login/index.html');
   }
 }

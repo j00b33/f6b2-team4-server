@@ -34,7 +34,7 @@ export class UserService {
   async findIdOne({ userId }) {
     return await this.userRepository.findOne({
       where: {
-        id: { userId },
+        id: userId,
       },
     });
   }

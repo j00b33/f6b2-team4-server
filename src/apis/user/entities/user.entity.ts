@@ -44,6 +44,14 @@ export class User {
   @Field(() => Int)
   points: number;
 
+  @Column({ default: 0 })
+  @Field(() => Int)
+  boardCounts: number;
+
+  @Column({ default: 0 })
+  @Field(() => Int)
+  communityBoardCounts: number;
+
   @DeleteDateColumn()
   deletedAt: Date;
 
