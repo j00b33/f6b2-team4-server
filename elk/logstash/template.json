@@ -26,9 +26,13 @@
   },
   "mappings": {
     "properties": {
-      "content": {
+      "word": {
         "type": "text",
-        "analyzer": "my_ngram_analyzer"
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
       }
     }
   }

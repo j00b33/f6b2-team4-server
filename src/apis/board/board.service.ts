@@ -124,9 +124,10 @@ export class BoardService {
 
   async delete({ boardId }) {
     const findUserFromBoard = await this.boardRepository.findOne({
-      where: { writer: boardId },
-      relations: ['user'],
+      where: { id: boardId },
+      relations: ['writer'],
     });
+    console.log(findUserFromBoard);
 
     await this.userRepository.update(
       {

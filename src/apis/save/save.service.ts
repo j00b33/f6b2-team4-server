@@ -26,9 +26,6 @@ export class SaveService {
   }
 
   async save({ boardId, currentUser }) {
-    const Board = await this.boardRepository.findOne({
-      where: { id: boardId },
-    });
     const savedBoard = await this.saveRepository.findOne({
       where: { board: boardId, user: currentUser },
     });
@@ -37,6 +34,39 @@ export class SaveService {
       await this.saveRepository.save({
         ...savedBoard,
         isSaved: false,
+      });
+
+      return 'Board Save Canceled';
+    } else if (savedBoard && savedBoard.isSaved === false) {
+      await this.saveRepository.save({
+        ...savedBoard,
+        isSaved: true,
+      });
+
+      return 'Board Saved';
+    }
+
+    await this.saveRepository.save({
+      user: currentUser,
+      board: boardId,
+      isSaved: true,
+    });
+
+    return 'Board Saved';
+  }
+
+  async like({ boardId, currentUser }) {
+    const Board = await this.boardRepository.findOne({
+      where: { id: boardId },
+    });
+    const likedBoard = await this.saveRepository.findOne({
+      where: { board: boardId, user: currentUser },
+    });
+
+    if (likedBoard && likedBoard.isLiked === true) {
+      await this.saveRepository.save({
+        ...likedBoard,
+        isLiked: false,
       });
       await this.boardRepository.save({
         where: {
@@ -48,11 +78,11 @@ export class SaveService {
         likes: Board.likes - 1,
       });
 
-      return 'Board Save Canceled';
-    } else if (savedBoard && savedBoard.isSaved === false) {
+      return 'Board Like Canceled';
+    } else if (likedBoard && likedBoard.isLiked === false) {
       await this.saveRepository.save({
-        ...savedBoard,
-        isSaved: true,
+        ...likedBoard,
+        isLiked: true,
       });
       await this.boardRepository.save({
         where: {
@@ -63,13 +93,13 @@ export class SaveService {
         ...Board,
         likes: Board.likes + 1,
       });
-      return 'Board Saved';
+      return 'Board Liked';
     }
 
     await this.saveRepository.save({
       user: currentUser,
       board: boardId,
-      isSaved: true,
+      isLiked: true,
     });
     await this.boardRepository.save({
       where: {
@@ -79,33 +109,6 @@ export class SaveService {
       },
       ...Board,
       likes: Board.likes + 1,
-    });
-    return 'Board Saved';
-  }
-
-  async like({ boardId, currentUser }) {
-    const likedBoard = await this.saveRepository.findOne({
-      where: { board: boardId, user: currentUser },
-    });
-
-    if (likedBoard && likedBoard.isLiked === true) {
-      await this.saveRepository.save({
-        ...likedBoard,
-        isLiked: false,
-      });
-      return 'Board Like Canceled';
-    } else if (likedBoard && likedBoard.isLiked === false) {
-      await this.saveRepository.save({
-        ...likedBoard,
-        isLiked: true,
-      });
-      return 'Board Liked';
-    }
-
-    await this.saveRepository.save({
-      user: currentUser,
-      board: boardId,
-      isLiked: true,
     });
     return 'Board Liked';
   }
