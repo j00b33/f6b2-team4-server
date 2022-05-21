@@ -12,14 +12,18 @@ export class CommunityBoardResolver {
   constructor(private readonly communityBoardService: CommunityBoardService) {}
 
   @Query(() => [CommunityBoard])
-  fetchCommnuityBoards() {
-    return this.communityBoardService.findAll();
+  fetchCommunityBoards(
+    @Args('pageSize', { nullable: true }) pageSize: number,
+    @Args('page', { nullable: true }) page: number,
+    @Args('userId', { nullable: true }) userId: string,
+  ) {
+    return this.communityBoardService.findAll({ pageSize, page, userId });
   }
 
-  @Query(() => [CommunityBoard])
-  fetchCommunityBoardbyUser(@Args('userId') userId: string) {
-    return this.communityBoardService.findAllId({ userId });
-  }
+  // @Query(() => [CommunityBoard])
+  // fetchCommunityBoardbyUser(@Args('userId') userId: string) {
+  //   return this.communityBoardService.findAllId({ userId });
+  // }
 
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => [CommunityBoard])

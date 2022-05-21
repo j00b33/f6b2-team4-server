@@ -17,6 +17,8 @@ type User {
   image: String!
   password: String!
   points: Int!
+  boardCounts: Int!
+  communityBoardCounts: Int!
   currentRegion: CurrentRegion!
 }
 
@@ -25,6 +27,7 @@ type Board {
   content: String!
   video: String!
   likes: Int!
+  commentsCount: Int!
   writer: User!
   createdAt: DateTime!
   deletedAt: DateTime!
@@ -88,17 +91,16 @@ enum RECEIPT_STATUS_ENUM {
 }
 
 type Query {
-  fetchBoards: [Board!]!
-  fetchBoardsbyUser(userId: String!): [Board!]!
+  fetchBoards(pageSize: Float, page: Float, userId: String): [Board!]!
   fetchMyBoards: [Board!]!
   fetchBoard(boardId: String!): Board!
+  fetchBoardsCount(UserId: String): Int!
   fetchBoardImages: [BoardImage!]!
   fetchBoardImage(board: String!): [BoardImage!]!
   fetchUsers: [User!]!
   fetchUser: User!
   fetchUserId(userId: String!): User!
-  fetchCommnuityBoards: [CommunityBoard!]!
-  fetchCommunityBoardbyUser(userId: String!): [CommunityBoard!]!
+  fetchCommunityBoards(pageSize: Float, page: Float, userId: String): [CommunityBoard!]!
   fetchMyCommunityBoards: [CommunityBoard!]!
   fetchCommunityBoard(communityBoardId: String!): CommunityBoard!
   fetchComments(boardId: String!): [Comment!]!

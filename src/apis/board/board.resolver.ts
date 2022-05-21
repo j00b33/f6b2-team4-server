@@ -1,5 +1,6 @@
+import { integer } from '@elastic/elasticsearch/lib/api/types';
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Query, Int } from '@nestjs/graphql';
 import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';
 import { CurrentUser, ICurrentUser } from 'src/commons/auth/gql-user.param';
 import { BoardService } from './board.service';
@@ -12,14 +13,18 @@ export class BoardResolver {
   constructor(private readonly boardService: BoardService) {}
 
   @Query(() => [Board])
-  fetchBoards() {
-    return this.boardService.findAll();
+  fetchBoards(
+    @Args('pageSize', { nullable: true }) pageSize: number,
+    @Args('page', { nullable: true }) page: number,
+    @Args('userId', { nullable: true }) userId: string,
+  ) {
+    return this.boardService.findAll({ pageSize, page, userId });
   }
 
-  @Query(() => [Board])
-  fetchBoardsbyUser(@Args('userId') userId: string) {
-    return this.boardService.findAllId({ userId });
-  }
+  // @Query(() => [Board])
+  // fetchBoardsbyUser(@Args('userId', { nullable: true }) userId: string) {
+  //   return this.boardService.findAllId({ userId });
+  // }
 
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => [Board])
@@ -30,6 +35,11 @@ export class BoardResolver {
   @Query(() => Board)
   fetchBoard(@Args('boardId') boardId: string) {
     return this.boardService.findOne({ boardId });
+  }
+
+  @Query(() => Int)
+  fetchBoardsCount(@Args('UserId', { nullable: true }) userId: string) {
+    return this.boardService.count({ userId });
   }
 
   @UseGuards(GqlAuthAccessGuard)

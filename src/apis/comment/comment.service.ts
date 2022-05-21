@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { resourceLimits } from 'worker_threads';
+import { Board } from '../board/entities/board.entity';
 import { User } from '../user/entities/user.entity';
 import { Comment } from './entities/comment.entity';
 
@@ -12,6 +14,9 @@ export class CommentService {
 
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+
+    @InjectRepository(Board)
+    private readonly boardRepository: Repository<Board>,
   ) {}
 
   async findAll({ boardId }) {
@@ -22,6 +27,18 @@ export class CommentService {
   }
 
   async create({ createCommentInput, boardId, currentUser }) {
+    const findboard = await this.boardRepository.findOne({
+      id: boardId,
+    });
+    await this.boardRepository.update(
+      {
+        id: boardId,
+      },
+      {
+        commentsCount: findboard.commentsCount + 1,
+      },
+    );
+
     const writer = await this.userRepository.findOne({
       email: currentUser.email,
     });
@@ -50,12 +67,27 @@ export class CommentService {
   }
 
   async delete({ commentId }) {
+    const findBoardFromComment = await this.commentRepository.findOne({
+      where: { id: commentId },
+      relations: ['board'],
+    });
+
+    await this.boardRepository.update(
+      {
+        id: findBoardFromComment.board.id,
+      },
+      {
+        commentsCount: findBoardFromComment.board.commentsCount - 1,
+      },
+    );
+
     const result = await this.commentRepository.softDelete({
       id: commentId,
     });
-    const deleteAllRelated = await this.commentRepository.softDelete({
+    await this.commentRepository.softDelete({
       parentComment: commentId,
     });
+
     return result.affected ? true : false;
   }
 }

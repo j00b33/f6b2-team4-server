@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Comment } from '../comment/entities/comment.entity';
 import { User } from '../user/entities/user.entity';
 import { LikeComment } from './entities/likeComment.entity';
-import { LikeCommentResolver } from './likecomment.resolver';
+import { LikeCommentResolver } from './likeComment.resolver';
 import { LikeCommentService } from './likeComment.service';
 
 @Module({
