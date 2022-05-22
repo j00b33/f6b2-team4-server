@@ -14,9 +14,13 @@ export class LikeCommunityResolver {
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => [LikeCommunityBoard])
   async fetchLikedCommunityBoard(
-    @CurrentUser() currentUser: ICurrentUser, //
+    @CurrentUser() currentUser: ICurrentUser,
+    @Args('userId', { nullable: true }) userId: string, //
   ) {
-    return await this.likeCommunityBoardService.findAll({ currentUser });
+    return await this.likeCommunityBoardService.findAll({
+      currentUser,
+      userId,
+    });
   }
 
   @UseGuards(GqlAuthAccessGuard)

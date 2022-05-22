@@ -13,8 +13,9 @@ export class LikeCommentResolver {
   @Query(() => [LikeComment])
   fetchLikedComment(
     @CurrentUser() currentUser: ICurrentUser, //
+    @Args('userId', { nullable: true }) userId: string,
   ) {
-    return this.likeCommentService.find({ currentUser });
+    return this.likeCommentService.find({ currentUser, userId });
   }
 
   @UseGuards(GqlAuthAccessGuard)
