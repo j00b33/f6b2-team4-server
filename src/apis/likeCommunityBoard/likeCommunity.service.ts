@@ -18,6 +18,14 @@ export class LikeCommunityBoardService {
     private readonly likeCommunityBoardRepository: Repository<LikeCommunityBoard>,
   ) {}
 
+  async findAll({ currentUser }) {
+    console.log(currentUser);
+    return await this.likeCommunityBoardRepository.find({
+      where: { user: currentUser.id },
+      relations: ['user', 'communityBoard'],
+    });
+  }
+
   async like({ communityBoardId, currentUser }) {
     const CommunityBoard = await this.communityBoardRepository.findOne({
       where: { id: communityBoardId },

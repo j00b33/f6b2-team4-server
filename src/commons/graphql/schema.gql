@@ -90,6 +90,20 @@ enum RECEIPT_STATUS_ENUM {
   CANCELLED
 }
 
+type LikeComment {
+  id: String!
+  isLiked: Boolean!
+  user: User!
+  comment: Comment!
+}
+
+type LikeCommunityBoard {
+  id: String!
+  isLiked: Boolean!
+  communityBoard: CommunityBoard!
+  user: User!
+}
+
 type Query {
   fetchBoards(pageSize: Float, page: Float, userId: String): [Board!]!
   fetchMyBoards: [Board!]!
@@ -109,6 +123,8 @@ type Query {
   searchCommnunityContent(content: String!): [CommunityBoard!]!
   fetchReceipts: [Receipt!]!
   fetchMyReceipts: [Receipt!]!
+  fetchLikedCommunityBoard: [LikeCommunityBoard!]!
+  fetchLikedComment: [LikeComment!]!
 }
 
 type Mutation {

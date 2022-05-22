@@ -14,6 +14,10 @@ export class LikeCommunityBoard {
   @Field(() => Boolean)
   isLiked: boolean;
 
+  // @Column({ default: false })
+  // @Field(() => Boolean)
+  // isSaved: boolean;
+
   @ManyToOne(() => CommunityBoard)
   @Field(() => CommunityBoard)
   communityBoard: CommunityBoard;

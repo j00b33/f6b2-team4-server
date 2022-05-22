@@ -1,7 +1,8 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Query, Args, Mutation, Resolver } from '@nestjs/graphql';
 import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';
 import { CurrentUser, ICurrentUser } from 'src/commons/auth/gql-user.param';
+import { LikeCommunityBoard } from './entities/likeCommunity.entity';
 import { LikeCommunityBoardService } from './likeCommunity.service';
 
 @Resolver()
@@ -9,6 +10,14 @@ export class LikeCommunityResolver {
   constructor(
     private readonly likeCommunityBoardService: LikeCommunityBoardService,
   ) {}
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Query(() => [LikeCommunityBoard])
+  async fetchLikedCommunityBoard(
+    @CurrentUser() currentUser: ICurrentUser, //
+  ) {
+    return await this.likeCommunityBoardService.findAll({ currentUser });
+  }
 
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => String)
