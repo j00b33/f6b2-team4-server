@@ -18,6 +18,13 @@ export class LikeCommentService {
     private readonly likeCommentRepository: Repository<LikeComment>,
   ) {}
 
+  async find({ currentUser }) {
+    return await this.likeCommentRepository.find({
+      where: { user: currentUser.id },
+      relations: ['user', 'comment'],
+    });
+  }
+
   async like({ commentId, currentUser }) {
     const comment = await this.commentRepository.findOne({
       where: { id: commentId },
