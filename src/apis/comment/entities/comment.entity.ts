@@ -38,9 +38,12 @@ export class Comment {
   @Field(() => User)
   writer: User;
 
-  @ManyToOne(() => Board)
+  @ManyToOne(
+    (type) => Board, //
+    (board) => board.comment,
+  )
   @Field(() => Board)
-  board: Board;
+  public board!: Board;
 
   @CreateDateColumn()
   @Field(() => Date)

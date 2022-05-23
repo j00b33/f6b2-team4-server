@@ -1,11 +1,14 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Comment } from 'src/apis/comment/entities/comment.entity';
 import { User } from 'src/apis/user/entities/user.entity';
+
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -47,4 +50,11 @@ export class Board {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(
+    (type) => Comment,
+    (comment) => comment.board, //
+    { cascade: true },
+  )
+  public comment: Comment[];
 }
