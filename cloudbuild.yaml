@@ -1,0 +1,21 @@
+steps:
+  #1단계
+  - name: 'gcr.io/cloud-builders/git'
+    args:
+      - pull
+      - upstream
+      - master
+
+  #2단계
+  - name: docker/compose:1.29.0
+    args:
+      - -f
+      - docker-compose.dev.yaml
+      - build
+
+  #3단계
+  - name: docker/compose:1.29.0
+    args:
+      - -f
+      - docker-compose.dev.yaml
+      - up

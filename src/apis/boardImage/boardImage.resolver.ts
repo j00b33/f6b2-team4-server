@@ -18,9 +18,9 @@ export class BoardImageResolver {
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => [BoardImage])
   fetchBoardImage(
-    @Args('board') board: string, //
+    @Args('boardId') boardId: string, //
   ) {
-    return this.boardImageService.findOne({ board });
+    return this.boardImageService.find({ boardId });
   }
 
   @UseGuards(GqlAuthAccessGuard)
@@ -36,7 +36,7 @@ export class BoardImageResolver {
   @Mutation(() => [BoardImage])
   updateBoardImage(
     @Args({ name: 'image', type: () => [String] }) image: string[], //
-    @Args('board') board: number,
+    @Args('board') board: string,
   ) {
     return this.boardImageService.update({ image, board });
   }

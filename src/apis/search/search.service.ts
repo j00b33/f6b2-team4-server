@@ -19,21 +19,25 @@ export class SearchService {
   async elasticSearchAll({ content }) {
     const result = await this.elasticsearchService.search({
       index: 'boardcontent',
-      query: {
-        match: { content: content },
+      body: {
+        query: {
+          match: { content: content },
+        },
       },
     });
-    return result;
+    return JSON.stringify(result, null, '  ');
   }
 
   async elasticSearchCommnuinity({ content }) {
     const result = await this.elasticsearchService.search({
       index: 'communitycontent',
-      query: {
-        match: { content: content },
+      body: {
+        query: {
+          match: { content: content },
+        },
       },
     });
-    return result;
+    return JSON.stringify(result, null, '  ');
   }
 
   async redisSaveAll({ content, values }) {

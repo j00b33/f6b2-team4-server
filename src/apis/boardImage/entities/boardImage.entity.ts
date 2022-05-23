@@ -15,7 +15,7 @@ export class BoardImage {
   @Field(() => String)
   id: string;
 
-  @Column({ unique: true })
+  @Column({ default: 'null' })
   @Field(() => String)
   image: string;
 

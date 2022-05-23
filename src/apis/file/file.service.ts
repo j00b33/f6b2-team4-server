@@ -13,9 +13,9 @@ export class FileService {
   //
   async upload({ files }: Ifile) {
     const storage = new Storage({
-      keyFilename: 'hiosifileKey.json',
-      projectId: 'backend04',
-    }).bucket('image-video-bucket');
+      keyFilename: '/my-secret/langbee.json',
+      projectId: 'langbee',
+    }).bucket('langbee');
 
     //일단 먼저 다 받기
     const waitedFiles = await Promise.all(files);
@@ -36,17 +36,17 @@ export class FileService {
         return new Promise((resolve, reject) => {
           el.createReadStream()
             .pipe(storage.file(el.filename).createWriteStream()) //pipe 업로드를 하고 난 후 2차적인 작업을 하고 싶을때
-            .on('finish', () => resolve(`backend04/${el.filename}`))
+            .on('finish', () => resolve(`langbee/${el.filename}`))
             .on('error', () => reject());
         });
       }),
     ); //[file,file,file,file...]
 
-    const URL = 'https://storage.googleapis.com/image-video-bucket/';
+    const URL = 'https://storage.googleapis.com/langbee/';
 
-    const fixedURL = directory.map((e: string) => e.replace('backend04/', URL));
+    const fixedURL = directory.map((e: string) => e.replace('langbee/', URL));
     const final_directory = directory.map((e: string) =>
-      e.replace('backend04/', ''),
+      e.replace('langbee/', ''),
     );
     const results = ['GCPdirectory:', ...final_directory, 'URL:', ...fixedURL];
 
@@ -55,9 +55,9 @@ export class FileService {
 
   async delete({ files }) {
     const storage = new Storage({
-      keyFilename: 'hiosifileKey.json',
-      projectId: 'backend042',
-    }).bucket('image-video-bucket');
+      keyFilename: '/my-secret/langbee.json',
+      projectId: 'langbee',
+    }).bucket('langbee');
 
     try {
       await storage.file(files).delete();

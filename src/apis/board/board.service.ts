@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Comment } from '../comment/entities/comment.entity';
 import { User } from '../user/entities/user.entity';
 import { Board } from './entities/board.entity';
 
@@ -12,6 +13,9 @@ export class BoardService {
 
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+
+    @InjectRepository(Comment)
+    private readonly commentRepository: Repository<Comment>,
   ) {}
 
   async findAll({ pageSize, page, userId }) {
@@ -137,8 +141,13 @@ export class BoardService {
         boardCounts: findUserFromBoard.writer.boardCounts - 1,
       },
     );
+    const parent = await this.boardRepository.findOneOrFail(
+      { id: boardId },
+      { relations: ['comment'] },
+    );
 
-    const result = await this.boardRepository.softDelete({ id: boardId });
-    return result.affected ? true : false;
+    const result = await this.boardRepository.softRemove(parent);
+
+    return result ? true : false;
   }
 }

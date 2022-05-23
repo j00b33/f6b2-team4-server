@@ -24,9 +24,9 @@ export class BoardImageService {
     });
   }
 
-  async findOne({ board }) {
-    return await this.boardImageRepository.findOne({
-      where: { board },
+  async find({ boardId }) {
+    return await this.boardImageRepository.find({
+      where: { board: boardId },
       relations: ['board'],
     });
   }
