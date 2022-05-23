@@ -123,8 +123,8 @@ type Query {
   searchCommnunityContent(content: String!): [CommunityBoard!]!
   fetchReceipts: [Receipt!]!
   fetchMyReceipts: [Receipt!]!
-  fetchLikedCommunityBoard: [LikeCommunityBoard!]!
-  fetchLikedComment: [LikeComment!]!
+  fetchLikedCommunityBoard(userId: String): [LikeCommunityBoard!]!
+  fetchLikedComment(userId: String): [LikeComment!]!
 }
 
 type Mutation {
