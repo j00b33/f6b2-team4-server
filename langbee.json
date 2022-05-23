@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "langbee",
+  "private_key_id": "bb99bdeacb8f8631339c179dfaf8fb407b693848",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDOK44ykdQ+PbOp\n+k0awiIFW1XngmsF0Kf6I0jHxFkVatg9TIR+DDX+v5BqO9lyM0wwCzWXlNSXUkU+\neNTBsDAQYNLeNBl5iR0xRlvx5TjsRnLsuzxMxDVwS/Bavkd4/fIwH8f3o/9hbgaa\nIsTvYFO0giRqNdgIv+S57pDOC2SJkmOgR38Ipv3Neg7Z6+MP7WByYGViE52+pW6J\nwXxD3KiZqHGP7Kb0WGEy87uKtSOu11gdInZM+B+0o/9OBCYN0Iqvmn9EQKSu2IzZ\nznY/+7FaMe8Gkt+24SFd0kEE/Si3SLfMePL+LPFPN0iQ9yCSBL/6Hk6jxHvh/kav\nD7/gucvbAgMBAAECggEAD2/vy0s5DFoGuGJaC01gSmy5hMayqHJPCZSXxVbR4XUp\nG4STDR8b8ecPyKySORIB5pJdoRZ58+9V6PoXhX3hnhr/NGJ2n9o2RIjDUgb7A/y4\na+UPJvkFaVL+UcUanpghM3JFwP4CHXOlbJLQPSjwy5IiaON+5BTTlbUjxDx9JYHH\n5e/kkD48VucdArFcaPDc1z5AX/MP2T3Esrc+fVB44BNRGlbvcenAjjpV/zqecZpS\nTt8WvKrgvaxhP59r31F1vrQVRUVmFxRnnMFYajl+K3R0MozTdJapDQ6oKLXfuP20\nh39nr43MHOVW6qKfoEnvGECCyxGMdPDmXMlmROqUGQKBgQD4IF+KLQDTpepySN+r\n2yzksUky3QgZ0lN8JIE5+555toWBNwX4DfrI8xtQTej1bUKhdH+V/T72XtbOmpdH\n/hfBTYfiWgFYnKtweOlyX1SgrCJPHHrmGi4TFYxxNXAYC9R126rX+IUg0DdbaMv3\nTVoNzAZqT8gzmMd+N323AExyWQKBgQDUtlrbl7XABNzVlpoH1q+2wpcJ/dp2F2ER\n+clmQhJVkVoooQfokBGGnhFJz7lxckrkEfPe+fgx0Y54Y5ttm7LsT2WJSjPad1/3\nGH7Xv3pqEtOxQGfGe47BrcO6Df7Ar1guXekTapOZXrFEFG3sYiOPMPl3cHpPykTp\n44LQ3+VhUwKBgC2twAjvCgTsuYF6mvrHabdcT+52NISUbNwg2E11XhJoIKHOIGIv\nKKkP4EpjXWy5RZf1m3tgWNQAV6lHWmxdgcALZuWrzi2jAgi9qbRtimXd6p8HzjRI\nQ40t3WIGBXHX07Ay1XvW+6Mz0c0ZONt5OQfrNI8jyuZ8zNUWoCUtf+VZAoGAf3bm\n6z/2AaLoUnV0x822beYdbDdaefl4ibUNIuHk6rG3PTGB87KhTfHamkiH75t1lUXM\nxYk1WWUh4rKNqRjsFv9c8PAuMnPmZcOf/tkXGgk+IbFefmn8GcNuzkckqYJpbR+J\nU8FBwV4lC47ScBw/AsduNkyIftfOg/l5ooEIi1ECgYEAw4PqKISVilJ0oPQcxOY6\n5PG2573/xBX0Sqk6Or7fdoaddmkrE1DrbC52EiQklicvNuP7YGM0B8jrATtWhonB\nbkokb9KKJXBfo5CZb4iRgASj29ZDxkdNMPfm4fbaedk5DsNmD9+anJW3VvQy64QL\nYh3hWwqzzJUj8bufU09Ke5Q=\n-----END PRIVATE KEY-----\n",
+  "client_email": "langbee@langbee.iam.gserviceaccount.com",
+  "client_id": "111232108703966803979",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/langbee%40langbee.iam.gserviceaccount.com"
+}

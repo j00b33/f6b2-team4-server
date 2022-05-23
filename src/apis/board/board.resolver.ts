@@ -1,4 +1,3 @@
-import { integer } from '@elastic/elasticsearch/lib/api/types';
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver, Query, Int } from '@nestjs/graphql';
 import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';

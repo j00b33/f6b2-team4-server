@@ -19,6 +19,7 @@ import { ReceiptModule } from './apis/receipt/receipt.module';
 import { LikeCommentModule } from './apis/likeComment/likeComment.module';
 import { CurrentRegionModule } from './apis/currentRegion/currentRegion.module';
 import { LikeCommunityBoardModule } from './apis/likeCommunityBoard/likeCommunity.module';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
 
 @Module({
   imports: [
@@ -46,9 +47,10 @@ import { LikeCommunityBoardModule } from './apis/likeCommunityBoard/likeCommunit
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
+      host: '10.107.64.4', // langbee.shop
       // host: 'my-database', // localhost
       // host: '10.127.112.4', //team04backend.shop
-      host: '172.27.48.3', //hiosi123.shop
+      // host: '172.27.48.3', //hiosi123.shop
       port: 3306,
       username: 'root',
       password: 'root',
@@ -57,11 +59,10 @@ import { LikeCommunityBoardModule } from './apis/likeCommunityBoard/likeCommunit
       synchronize: true,
       logging: true,
     }),
+
     CacheModule.register<RedisClientOptions>({
       store: redisStore,
-      // url: 'redis://my-redis:6379', // localhost
-      // url: 'redis://:oj4tpyWX@10.140.0.3:6379', //team04backend.shop
-      url: 'redis://:NvUF5Lwg@10.140.0.2:6379', //hiosi123.shop
+      url: 'redis://10.107.65.3:6379', // 기본 엔드포인트
       isGlobal: true,
     }),
   ],
