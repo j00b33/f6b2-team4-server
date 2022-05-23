@@ -39,7 +39,7 @@ export class CommunityBoard {
   @Field(() => Int)
   likes: number;
 
-  @Column({ nullable: true })
+  @Column({ default: 'null' })
   @Field(() => String)
   image: string;
 
