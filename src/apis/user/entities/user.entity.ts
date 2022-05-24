@@ -32,8 +32,8 @@ export class User {
   @Field(() => String)
   newLang: string;
 
-  @Column({ nullable: true })
-  @Field(() => String)
+  @Column({ default: 'null' })
+  @Field(() => String, { nullable: true })
   image: string;
 
   @Column()
@@ -55,7 +55,6 @@ export class User {
   @DeleteDateColumn()
   deletedAt: Date;
 
-  @JoinColumn()
   @ManyToOne(() => CurrentRegion)
   @Field(() => CurrentRegion)
   currentRegion: CurrentRegion;

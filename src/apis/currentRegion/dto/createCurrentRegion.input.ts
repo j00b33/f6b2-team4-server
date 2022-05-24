@@ -5,6 +5,6 @@ export class CurrentRegionInput {
   @Field(() => String)
   region: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   regionDetail: string;
 }
