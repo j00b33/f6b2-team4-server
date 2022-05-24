@@ -1,24 +1,25 @@
 version: '3.7'
 
 services:
-  my-backend:
-    image: asia.gcr.io/langbee/my_backend:1.2
+  my_backend:
     platform: linux/x86_64
+    image: asia.gcr.io/langbee/my_backend:2.2
     build:
       context: .
       dockerfile: Dockerfile
     # volumes:
-    #   - ./src:/myfolder/src
-
+    #   - ./src:/my_backend/src
+    # env_file:
+    #   - ./.env.prod
     ports:
       - 3000:3000
 
-  logstash:
-    image: asia.gcr.io/langbee/my-logstash:1.1
-    platform: linux/x86_64
-    build:
-      context: .
-      dockerfile: Dockerfile.logstash
+  # logstash:
+  #   image: asia.gcr.io/langbee/my-logstash:1.1
+  #   platform: linux/x86_64
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.logstash
 
   # my-redis:
   #   image: redis:latest

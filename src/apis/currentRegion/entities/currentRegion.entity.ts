@@ -13,11 +13,11 @@ export class CurrentRegion {
   @Field(() => String)
   id: string;
 
-  @Column({ unique: true })
+  @Column()
   @Field(() => String)
   region: string;
 
-  @Column()
+  @Column({ default: 'null' })
   @Field(() => String, { nullable: true })
   regionDetail: string;
 

@@ -110,7 +110,7 @@ type Query {
   fetchBoard(boardId: String!): Board!
   fetchBoardsCount(UserId: String): Int!
   fetchBoardImages: [BoardImage!]!
-  fetchBoardImage(board: String!): [BoardImage!]!
+  fetchBoardImage(boardId: String!): [BoardImage!]!
   fetchUsers: [User!]!
   fetchUser: User!
   fetchUserId(userId: String!): User!
@@ -135,7 +135,7 @@ type Mutation {
   updateBoard(boardId: String!, updateBoardInput: UpdateBoardInput!): Board!
   deleteBoard(boardId: String!): Boolean!
   createBoardImage(image: [String!]!, board: String!): [BoardImage!]!
-  updateBoardImage(image: [String!]!, board: Float!): [BoardImage!]!
+  updateBoardImage(image: [String!]!, board: String!): [BoardImage!]!
   deleteBoardImage(image: String!): Boolean!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(originalPassword: String!, updateUserInput: UpdateUserInput!): User!
