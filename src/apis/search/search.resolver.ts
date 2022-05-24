@@ -26,6 +26,7 @@ export class SearchResolver {
     });
 
     const values = [];
+    console.log(elasticGet);
     for (let i = 0; i < elasticGet['hits']['hits'].length; i++) {
       const all = elasticGet['hits']['hits'][i]['_source'];
 
