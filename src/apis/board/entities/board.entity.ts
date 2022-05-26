@@ -24,7 +24,7 @@ export class Board {
   @Field(() => String)
   content: string;
 
-  @Column()
+  @Column({ default: 'null' })
   @Field(() => String)
   video: string;
 
@@ -49,6 +49,7 @@ export class Board {
   deletedAt: Date;
 
   @UpdateDateColumn()
+  @Field(() => Date)
   updatedAt: Date;
 
   @OneToMany(

@@ -9,13 +9,11 @@ import { BoardImage } from './entities/boardImage.entity';
 export class BoardImageResolver {
   constructor(private readonly boardImageService: BoardImageService) {}
 
-  @UseGuards(GqlAuthAccessGuard)
   @Query(() => [BoardImage])
   fetchBoardImages() {
     return this.boardImageService.findAll();
   }
 
-  @UseGuards(GqlAuthAccessGuard)
   @Query(() => [BoardImage])
   fetchBoardImage(
     @Args('boardId') boardId: string, //

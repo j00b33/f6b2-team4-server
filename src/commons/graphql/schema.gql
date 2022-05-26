@@ -14,7 +14,7 @@ type User {
   email: String!
   myLang: String!
   newLang: String!
-  image: String!
+  image: String
   password: String!
   points: Int!
   boardCounts: Int!
@@ -219,7 +219,7 @@ input UpdateCommentInput {
 
 input CurrentRegionInput {
   region: String!
-  regionDetail: String!
+  regionDetail: String
 }
 
 """The `Upload` scalar type represents a file upload."""

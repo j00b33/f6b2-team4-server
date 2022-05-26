@@ -16,8 +16,16 @@ export class BoardResolver {
     @Args('pageSize', { nullable: true }) pageSize: number,
     @Args('page', { nullable: true }) page: number,
     @Args('userId', { nullable: true }) userId: string,
+    @Args('bestboardCount', { nullable: true }) bestboardCount: number,
+    @Args('language', { nullable: true }) language: string,
   ) {
-    return this.boardService.findAll({ pageSize, page, userId });
+    return this.boardService.findAll({
+      pageSize,
+      page,
+      userId,
+      bestboardCount,
+      language,
+    });
   }
 
   // @Query(() => [Board])

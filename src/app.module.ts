@@ -62,7 +62,8 @@ import { ElasticsearchModule } from '@nestjs/elasticsearch';
 
     CacheModule.register<RedisClientOptions>({
       store: redisStore,
-      url: 'redis://10.107.65.3:6379', // 기본 엔드포인트
+      url: 'redis://10.107.65.3:6379', // langbee.shop
+      // url: 'redis://my-redis:6379', // local,
       isGlobal: true,
     }),
   ],

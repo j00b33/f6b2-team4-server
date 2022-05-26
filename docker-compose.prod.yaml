@@ -3,7 +3,7 @@ version: '3.7'
 services:
   my_backend:
     platform: linux/x86_64
-    image: asia.gcr.io/langbee/my_backend:2.2
+    image: asia.gcr.io/langbee/my_backend:4.3
     build:
       context: .
       dockerfile: Dockerfile
