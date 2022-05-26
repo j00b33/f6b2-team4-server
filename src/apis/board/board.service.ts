@@ -18,10 +18,44 @@ export class BoardService {
     private readonly commentRepository: Repository<Comment>,
   ) {}
 
-  async findAll({ pageSize, page, userId }) {
+  async findAll({ pageSize, page, userId, bestboardCount, language }) {
     if (page <= 0) {
       page = 1;
     }
+    const userInfo = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+
+    if (bestboardCount && userId) {
+      return await this.boardRepository.find({
+        order: {
+          likes: 'DESC',
+        },
+        where: { writer: { newLang: userInfo.newLang, id: userId } },
+        take: bestboardCount,
+        relations: ['writer'],
+      });
+    }
+    if (bestboardCount && language) {
+      return await this.boardRepository.find({
+        order: {
+          likes: 'DESC',
+        },
+        where: { writer: { newLang: language } },
+        take: bestboardCount,
+        relations: ['writer'],
+      });
+    }
+    if (bestboardCount) {
+      return await this.boardRepository.find({
+        order: {
+          likes: 'DESC',
+        },
+        take: bestboardCount,
+        relations: ['writer'],
+      });
+    }
+
     if (pageSize && page && userId) {
       return await this.boardRepository.find({
         order: {

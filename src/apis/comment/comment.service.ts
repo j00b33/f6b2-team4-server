@@ -19,9 +19,27 @@ export class CommentService {
     private readonly boardRepository: Repository<Board>,
   ) {}
 
-  async findAll({ boardId }) {
+  async findAll({ pageSize, page, boardId }) {
+    if (page <= 0) {
+      page = 1;
+    }
+    if (pageSize && page && boardId) {
+      return await this.commentRepository.find({
+        where: { board: boardId },
+        order: {
+          createdAt: 'DESC',
+        },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        relations: ['board', 'writer', 'parentComment'],
+      });
+    }
+
     return await this.commentRepository.find({
       where: { board: boardId },
+      order: {
+        createdAt: 'DESC',
+      },
       relations: ['board', 'writer', 'parentComment'],
     });
   }

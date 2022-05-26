@@ -12,8 +12,12 @@ export class CommentResolver {
   constructor(private readonly commentService: CommentService) {}
 
   @Query(() => [Comment])
-  fetchComments(@Args('boardId') boardId: string) {
-    return this.commentService.findAll({ boardId });
+  fetchComments(
+    @Args('boardId') boardId: string,
+    @Args('pageSize', { nullable: true }) pageSize: number,
+    @Args('page', { nullable: true }) page: number,
+  ) {
+    return this.commentService.findAll({ pageSize, page, boardId });
   }
 
   @UseGuards(GqlAuthAccessGuard)

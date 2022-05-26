@@ -5,6 +5,6 @@ export class CreateBoardInput {
   @Field(() => String)
   content: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   video: string;
 }

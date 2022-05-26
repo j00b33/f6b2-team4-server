@@ -1,17 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
 import { FileUpload } from 'graphql-upload';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { FileCount } from './entities/fileCount.entity';
 
 let count = 0;
-
 interface Ifile {
   files: FileUpload[];
 }
 
 @Injectable()
 export class FileService {
+  constructor(
+    @InjectRepository(FileCount)
+    private readonly fileRepository: Repository<FileCount>,
+  ) {}
   //
+
   async upload({ files }: Ifile) {
+    const fileImage = await this.fileRepository.findOne({
+      order: {
+        number: 'DESC',
+      },
+    });
+
+    count = fileImage.number;
+
     const storage = new Storage({
       keyFilename: '/my-secret/langbee.json',
       projectId: 'langbee',
@@ -50,6 +65,9 @@ export class FileService {
     );
     const results = ['GCPdirectory:', ...final_directory, 'URL:', ...fixedURL];
 
+    await this.fileRepository.save({
+      number: count,
+    });
     return results;
   }
 

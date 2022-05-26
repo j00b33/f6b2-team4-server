@@ -15,7 +15,7 @@ export class CurrentRegionService {
   }
 
   async create({ currentRegionInput }) {
-    await this.currentRegionRepository.save({ ...currentRegionInput });
+    return await this.currentRegionRepository.save({ ...currentRegionInput });
   }
 
   async update({ updateCurrentRegionInput, currentRegionId }) {

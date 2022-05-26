@@ -1,4 +1,5 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
+import { use } from 'passport';
 import { Board } from '../board/entities/board.entity';
 import { CommunityBoard } from '../communityBoard/entities/communityBoard.entity';
 import { SearchService } from './search.service';
@@ -30,9 +31,26 @@ export class SearchResolver {
     for (let i = 0; i < elasticGet['hits']['hits'].length; i++) {
       const all = elasticGet['hits']['hits'][i]['_source'];
 
-      console.log('🍌', all);
+      all['commentsCount'] = all['commentscount'];
+      all['createdAt'] = new Date(all['createdat']);
+      all['updatedAt'] = new Date(all['updatedat']);
+
+      all['writer'] = {
+        id: all['writerid'],
+        name: all['name'],
+        email: all['email'],
+        myLang: all['mylang'],
+        newLang: all['newlang'],
+        image: all['boardimage'],
+        password: all['password'],
+        points: all['points'],
+        boardCounts: all['boardcounts'],
+        communityBoardCounts: all['communityboardcounts'],
+      };
+
       values.push(all);
     }
+    values.sort((a, b) => b.createdAt - a.createdAt);
 
     await this.searchService.redisSaveAll({ content, values });
 
