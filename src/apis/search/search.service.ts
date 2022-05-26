@@ -17,18 +17,36 @@ export class SearchService {
     return mycache;
   }
 
-  async elasticSearchAll({ content }) {
-    const result = await this.elasticsearchService.search({
-      index: 'boardcontent',
-      query: {
-        bool: {
-          must: { match: { content: content } },
-          should: { match: { elasticdelete: 'alive' } },
-          must_not: { match: { elasticdelete: 'dead' } },
+  async elasticSearchAll({ content, page, pageSize }) {
+    if (content && page && pageSize) {
+      const result = await this.elasticsearchService.search({
+        index: 'boardcontent',
+        from: (page - 1) * pageSize,
+        size: pageSize,
+        query: {
+          bool: {
+            must: { match: { content: content } },
+            should: { match: { elasticdelete: 'alive' } },
+            must_not: { match: { elasticdelete: 'dead' } },
+          },
         },
-      },
-    });
-    return result;
+      });
+      return result;
+    }
+
+    if (content) {
+      const result1 = await this.elasticsearchService.search({
+        index: 'boardcontent',
+        query: {
+          bool: {
+            must: { match: { content: content } },
+            should: { match: { elasticdelete: 'alive' } },
+            must_not: { match: { elasticdelete: 'dead' } },
+          },
+        },
+      });
+      return result1;
+    }
   }
 
   async elasticSearchCommnuinity({ content }) {
