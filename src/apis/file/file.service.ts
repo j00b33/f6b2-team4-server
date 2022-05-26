@@ -24,8 +24,9 @@ export class FileService {
         number: 'DESC',
       },
     });
-
-    count = fileImage.number;
+    if (fileImage) {
+      count = fileImage.number;
+    }
 
     const storage = new Storage({
       keyFilename: '/my-secret/langbee.json',

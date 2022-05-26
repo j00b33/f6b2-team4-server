@@ -1,5 +1,4 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
-import { use } from 'passport';
 import { Board } from '../board/entities/board.entity';
 import { CommunityBoard } from '../communityBoard/entities/communityBoard.entity';
 import { SearchService } from './search.service';
@@ -17,7 +16,12 @@ export class SearchResolver {
     //1. 레디스에서 들고온다
     const redisGet = await this.searchService.redisGetAll({ content });
     if (redisGet) {
-      console.log('😇from redis');
+      console.log('😇', 'REDIS GET');
+      redisGet.forEach((e) => {
+        e['createdAt'] = new Date(e['createdat']);
+        e['updatedAt'] = new Date(e['updatedat']);
+        e['deletedAt'] = new Date(e['deletedat']);
+      });
       return redisGet;
     }
 
@@ -34,6 +38,7 @@ export class SearchResolver {
       all['commentsCount'] = all['commentscount'];
       all['createdAt'] = new Date(all['createdat']);
       all['updatedAt'] = new Date(all['updatedat']);
+      all['deletedAt'] = new Date(all['deletedat']);
 
       all['writer'] = {
         id: all['writerid'],

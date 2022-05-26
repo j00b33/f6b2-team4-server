@@ -48,6 +48,10 @@ export class Board {
   @Field(() => Date)
   deletedAt: Date;
 
+  @Column({ default: 'alive' })
+  @Field(() => String)
+  elasticdelete: string;
+
   @UpdateDateColumn()
   @Field(() => Date)
   updatedAt: Date;

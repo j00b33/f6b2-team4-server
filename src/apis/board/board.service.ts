@@ -58,6 +58,17 @@ export class BoardService {
         relations: ['writer'],
       });
     }
+    if (bestboardCount && myLang) {
+      return await this.boardRepository.find({
+        order: {
+          likes: 'DESC',
+        },
+        where: { writer: { myLang: myLang } },
+        take: bestboardCount,
+        relations: ['writer'],
+      });
+    }
+
     if (bestboardCount && newLang) {
       return await this.boardRepository.find({
         order: {
@@ -187,6 +198,14 @@ export class BoardService {
       where: { id: boardId },
       relations: ['writer'],
     });
+    await this.boardRepository.update(
+      {
+        id: boardId,
+      },
+      {
+        elasticdelete: 'dead',
+      },
+    );
     console.log(findUserFromBoard);
 
     await this.userRepository.update(
