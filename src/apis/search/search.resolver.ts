@@ -11,8 +11,14 @@ export class SearchResolver {
 
   @Query(() => [Board])
   async searchBoardContent(
-    @Args('content') content: string, //
+    @Args('content') content: string,
+    @Args('page', { nullable: true }) page: number,
+    @Args('pageSize', { nullable: true }) pageSize: number,
+    //
   ) {
+    if (content && page) {
+      content = content + String(page);
+    }
     //1. 레디스에서 들고온다
     const redisGet = await this.searchService.redisGetAll({ content });
     if (redisGet) {
@@ -28,6 +34,8 @@ export class SearchResolver {
     //2. 레디스에 없으면 일라스틱에서 들고옴
     const elasticGet = await this.searchService.elasticSearchAll({
       content,
+      page,
+      pageSize,
     });
 
     const values = [];
