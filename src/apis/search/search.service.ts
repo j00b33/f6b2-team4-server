@@ -1,7 +1,7 @@
 import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Cache } from 'cache-manager';
-import { createDecipheriv } from 'crypto';
+import { Board } from '../board/entities/board.entity';
 
 @Injectable()
 export class SearchService {
@@ -13,7 +13,7 @@ export class SearchService {
   ) {}
 
   async redisGetAll({ content }) {
-    const mycache = await this.cacheManager.get(content);
+    const mycache: Array<Board[]> = await this.cacheManager.get(content);
     return mycache;
   }
 
@@ -21,7 +21,11 @@ export class SearchService {
     const result = await this.elasticsearchService.search({
       index: 'boardcontent',
       query: {
-        match: { content: content },
+        bool: {
+          must: { match: { content: content } },
+          should: { match: { elasticdelete: 'alive' } },
+          must_not: { match: { elasticdelete: 'dead' } },
+        },
       },
     });
     return result;
@@ -31,7 +35,11 @@ export class SearchService {
     const result = await this.elasticsearchService.search({
       index: 'communitycontent',
       query: {
-        match: { content: content },
+        bool: {
+          must: { match: { content: content } },
+          should: { match: { elasticdelete: 'alive' } },
+          must_not: { match: { elasticdelete: 'dead' } },
+        },
       },
     });
     return result;
@@ -42,7 +50,7 @@ export class SearchService {
       content, //
       values,
       {
-        ttl: 100,
+        ttl: 60,
       },
     );
   }

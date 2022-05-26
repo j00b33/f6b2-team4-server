@@ -60,6 +60,6 @@ export class AuthService {
     //3. 로그인
     this.setRefreshToken({ user, res });
     // 여기로 온다
-    res.redirect('http://localhost:5501/frontend/login/index.html');
+    res.redirect('http://localhost:3000/garden');
   }
 }

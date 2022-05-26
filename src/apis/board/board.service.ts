@@ -198,6 +198,14 @@ export class BoardService {
       where: { id: boardId },
       relations: ['writer'],
     });
+    await this.boardRepository.update(
+      {
+        id: boardId,
+      },
+      {
+        elasticdelete: 'dead',
+      },
+    );
     console.log(findUserFromBoard);
 
     await this.userRepository.update(
