@@ -9,6 +9,10 @@
 
 - 🤝 Functionality **Cross match people who want to learn language**
 
+- 👺 Create env File!! **GOOGLE_KEY = (your key), GOOGLE_SECRET = (your key), GOOGLE_SECRET = (your key), NAVER_KEY = (your key),NAVER_SECRET = (your key), ACCESS_TOKEN_KEY = (your key),REFRESH_TOKEN_KEY = (your key), SMS_APP_KEY = (your key), SMS_X_SECRETE_KEY = (your key), SMS_SENDER = (your key), EMAIL_APP_KEY = (your key), EMAIL_X_SECRETE_KEY = (your key), EMAIL_SENDER = (your key)**
+
+- 💩IMPORTANT **if you are using localhost, please change mysql, and redis in app.module**
+
 <h3 align="left">Connect with me:</h3>
 <p align="left">
 </p>
@@ -27,6 +31,5 @@
 <h3 align="center">LangBee Backend API DOCS</h3>
 
 ![🚀 _Team Project - API Docs - Sheet1-1](https://user-images.githubusercontent.com/38133842/170811240-604ddfd5-78bc-4261-b991-894b195cde25.png)
-
 
 
