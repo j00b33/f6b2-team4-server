@@ -26,7 +26,7 @@
 
 <h3 align="center">LangBee Backend API DOCS</h3>
 
-[🚀 _Team Project - API Docs - Sheet1.pdf](https://github.com/code-bootcamp/f6b2-team4-server/files/8790527/_Team.Project.-.API.Docs.-.Sheet1.pdf)
+![🚀 _Team Project - API Docs - Sheet1-1](https://user-images.githubusercontent.com/38133842/170811240-604ddfd5-78bc-4261-b991-894b195cde25.png)
 
 
 
