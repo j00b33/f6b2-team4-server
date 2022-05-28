@@ -11,7 +11,7 @@ export class JwtNaverStrategy extends PassportStrategy(Strategy, 'naver') {
       //검중부, Bearer 뺴고 넣어야함, 내장 되어있음 .fromauthheadera
       clientID: process.env.NAVER_KEY, //구굴에서 들고오셈
       clientSecret: process.env.NAVER_SECRET,
-      callbackURL: 'http://localhost:3000/login/naver',
+      callbackURL: 'https://langbee.shop/login/naver',
       //사이트마다 다르다
     });
   }
@@ -29,7 +29,7 @@ export class JwtNaverStrategy extends PassportStrategy(Strategy, 'naver') {
       email: profile.email,
       password: '0000',
       name: profile.name, //req.user라는 이름에  contest 로 들어감
-      myLang: 'Korean',
+      myLang: '한국어',
       newLang: 'English',
       provider: profile.provider,
       image: profile.profileImage,

@@ -88,17 +88,22 @@ export class UserService {
     const user = await this.userRepository.findOne({
       where: { email: userEmail },
     });
-
-    const isAuth = await bcrypt.compare(originalPassword, user.password);
-
-    if (!isAuth)
-      throw new UnprocessableEntityException('암호가 일치하지 않습니다');
+    let isAuth;
+    if (user['password'].length > 4) {
+      isAuth = await bcrypt.compare(originalPassword, user.password);
+      if (!isAuth)
+        throw new UnprocessableEntityException('암호가 일치하지 않습니다');
+    }
 
     if (updateUserInput.password) {
       updateUserInput.password = await bcrypt.hash(
         updateUserInput.password,
         10,
       );
+    } else if (updateUserInput.password === '') {
+      updateUserInput.password = await bcrypt.hash(originalPassword, 10);
+    } else {
+      updateUserInput.password = await bcrypt.hash(originalPassword, 10);
     }
 
     const newUser = {
