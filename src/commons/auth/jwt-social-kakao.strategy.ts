@@ -10,7 +10,7 @@ export class JwtKakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
     super({
       //검중부, Bearer 뺴고 넣어야함, 내장 되어있음 .fromauthheadera
       clientID: process.env.KAKAO_KEY, //카카오
-      callbackURL: 'http://localhost:3000/login/kakao',
+      callbackURL: 'https://langbee.shop/login/kakao',
       //사이트마다 다르다
       scope: ['profile_nickname', 'account_email', 'profile_image'],
     });
@@ -21,18 +21,18 @@ export class JwtKakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
     console.log(refreshToken);
     console.log(profile);
 
-    if (!profile.profile_image) {
-      profile.profile_image = 'URL';
+    if (!profile._json.properties.profile_image) {
+      profile._json.properties.profile_image = 'URL';
     }
 
     return {
       email: profile._json.kakao_account.email,
       password: '0000',
       name: profile.displayName, //req.user라는 이름에  contest 로 들어감
-      myLang: 'Korean',
+      myLang: '한국어',
       newLang: 'English',
       provider: profile.provider,
-      image: profile.profile_image,
+      image: profile._json.properties.profile_image,
     };
   }
 }

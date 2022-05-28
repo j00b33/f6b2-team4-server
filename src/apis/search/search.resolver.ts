@@ -16,11 +16,8 @@ export class SearchResolver {
     @Args('pageSize', { nullable: true }) pageSize: number,
     //
   ) {
-    if (content && page) {
-      content = content + String(page);
-    }
     //1. 레디스에서 들고온다
-    const redisGet = await this.searchService.redisGetAll({ content });
+    const redisGet = await this.searchService.redisGetAll({ content, page });
     if (redisGet) {
       console.log('😇', 'REDIS GET');
       redisGet.forEach((e) => {
@@ -65,39 +62,40 @@ export class SearchResolver {
     }
     values.sort((a, b) => b.createdAt - a.createdAt);
 
-    await this.searchService.redisSaveAll({ content, values });
+    await this.searchService.redisSaveAll({ page, content, values });
 
     console.log('🥲 from elastic');
     return values;
   }
 
-  @Query(() => [CommunityBoard])
-  async searchCommnunityContent(
-    @Args('content') content: string, //
-  ) {
-    // 1. 레디스에서 들고온다
-    const redisGet = await this.searchService.redisGetAll({ content });
-    if (redisGet) {
-      console.log('😇from redis');
-      return redisGet;
-    }
+  //   @Query(() => [CommunityBoard])
+  //   async searchCommnunityContent(
+  //     @Args('content') content: string, //
+  //   ) {
+  //     // 1. 레디스에서 들고온다
+  //     const redisGet = await this.searchService.redisGetAll({ content });
+  //     if (redisGet) {
+  //       console.log('😇from redis');
+  //       return redisGet;
+  //     }
 
-    //2. 레디스에 없으면 일라스틱에서 들고옴
-    const elasticGet = await this.searchService.elasticSearchCommnuinity({
-      content,
-    });
+  //     //2. 레디스에 없으면 일라스틱에서 들고옴
+  //     const elasticGet = await this.searchService.elasticSearchCommnuinity({
+  //       content,
+  //     });
 
-    const values = [];
-    for (let i = 0; i < elasticGet['hits']['hits'].length; i++) {
-      const all = elasticGet['hits']['hits'][i]['_source'];
+  //     const values = [];
+  //     for (let i = 0; i < elasticGet['hits']['hits'].length; i++) {
+  //       const all = elasticGet['hits']['hits'][i]['_source'];
 
-      console.log('🍌', all);
-      values.push(all);
-    }
+  //       console.log('🍌', all);
+  //       values.push(all);
+  //     }
 
-    await this.searchService.redisSaveAll({ content, values });
+  //     await this.searchService.redisSaveAll({ content, values });
 
-    console.log('🥲 from elastic');
-    return values;
-  }
+  //     console.log('🥲 from elastic');
+  //     return values;
+  //   }
+  //}
 }

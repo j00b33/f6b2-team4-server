@@ -38,6 +38,7 @@ export class AuthResovler {
     if (!user)
       throw new UnprocessableEntityException('존재하지 않는 이메일 입니다');
     //3. 일치하는 유저가 있지만 암호가 틀렷다면 에러 던지기
+
     const isAuth = await bcrypt.compare(password, user.password);
     if (!isAuth)
       throw new UnprocessableEntityException('암호가 일치하지 않습니다');

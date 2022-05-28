@@ -12,7 +12,13 @@ export class SearchService {
     private readonly cacheManager: Cache,
   ) {}
 
-  async redisGetAll({ content }) {
+  async redisGetAll({ content, page }) {
+    let pageSearch;
+    if (content && page) {
+      pageSearch = content + String(page);
+      const mycache: Array<Board[]> = await this.cacheManager.get(pageSearch);
+      return mycache;
+    }
     const mycache: Array<Board[]> = await this.cacheManager.get(content);
     return mycache;
   }
@@ -63,12 +69,25 @@ export class SearchService {
     return result;
   }
 
-  async redisSaveAll({ content, values }) {
+  async redisSaveAll({ page, content, values }) {
+    let pageSearch;
+    if (content && page) {
+      pageSearch = content + String(page);
+      await this.cacheManager.set(
+        pageSearch, //
+        values,
+        {
+          ttl: 20,
+        },
+      );
+      return;
+    }
+
     await this.cacheManager.set(
       content, //
       values,
       {
-        ttl: 60,
+        ttl: 20,
       },
     );
   }
