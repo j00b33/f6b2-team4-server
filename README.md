@@ -1,5 +1,5 @@
-<h1 align="center">LANGBEE BACKEND: JOOBEE PARK, HONGSEOK SHIN</h1>
-<h3 align="center">LANGBEE BACKEND Repository</h3>
+<h1 align="center">LangBee BACKEND: JOOBEE PARK, HONGSEOK SHIN</h1>
+<h3 align="center">LangBee BACKEND Repository</h3>
 
 - 🔭 PROJECT NAME [LangBee](https://langbee.shop/graphql)
 
