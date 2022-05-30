@@ -44,6 +44,8 @@ export class UserService {
           <html>
               <body>
                   <h1 style="color: #434343">Welcome, ${createUserInput.name}!</h1>
+                  <img src="https://storage.googleapis.com/langbee/46.png" style="display: flex;
+                  flex-direction: column; align-items: center; width: 600px;"></img>
               </body>
           </html>
       `;
@@ -64,7 +66,7 @@ export class UserService {
       `https://api-mail.cloud.toast.com/email/v2.0/appKeys/${appKey}/sender/mail`,
       {
         senderAddress: sender,
-        title: 'Welcome to LangBee',
+        title: 'Welcome to LangBee!',
         body: template,
         receiverList: [
           {
