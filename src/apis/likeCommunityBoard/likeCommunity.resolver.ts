@@ -15,11 +15,11 @@ export class LikeCommunityResolver {
   @Query(() => [LikeCommunityBoard])
   async fetchLikedCommunityBoard(
     @CurrentUser() currentUser: ICurrentUser,
-    @Args('userId', { nullable: true }) userId: string, //
+    @Args('boardId', { nullable: true }) boardId: string, //
   ) {
     return await this.likeCommunityBoardService.findAll({
       currentUser,
-      userId,
+      boardId,
     });
   }
 
