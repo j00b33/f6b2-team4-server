@@ -8,7 +8,7 @@ export class UsePointResolver {
   constructor(private readonly usePointService: UsePointService) {}
 
   @Mutation(() => [User])
-  usePoints(@CurrentUser() currentUser: ICurrentUser) {
+  usePoint(@CurrentUser() currentUser: ICurrentUser) {
     return this.usePointService.use({ currentUser });
   }
 }
