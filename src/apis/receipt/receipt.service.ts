@@ -23,12 +23,14 @@ export class ReceiptService {
   async findAll({ currentUser }) {
     return await this.receiptRepository.find({
       where: { user: currentUser },
+      order: { purchasedAt: 'DESC' },
     });
   }
 
   async findMyAll({ currentUser }) {
     return await this.receiptRepository.find({
       where: { user: currentUser },
+      order: { purchasedAt: 'DESC' },
     });
   }
 
