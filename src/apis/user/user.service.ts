@@ -44,7 +44,7 @@ export class UserService {
           <html>
               <body>
                   <h1 style="color: #434343">Welcome, ${createUserInput.name}!</h1>
-                  <img src="https://storage.googleapis.com/langbee/46.png" style="display: flex;
+                  <img src="https://storage.googleapis.com/langbee/47.png" style="display: flex;
                   flex-direction: column; align-items: center; width: 600px;"></img>
               </body>
           </html>
