@@ -128,7 +128,12 @@ export class UserService {
       {
         senderAddress: sender,
         title: 'LangBee Confirmation',
-        body: `CONFIRMATION: ${tokenNumber}`,
+        body: `
+        <div>
+          <img src="https://prnt.sc/eIrF-pRHWcfj"/>
+          <div>CONFIRMATION: ${tokenNumber}</div>
+        </div>
+        `,
         receiverList: [
           {
             receiveMailAddr: email,

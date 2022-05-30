@@ -47,8 +47,8 @@ import { ElasticsearchModule } from '@nestjs/elasticsearch';
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '10.107.64.4', // langbee.shop
-      // host: 'my-database', // localhost
+      // host: '10.107.64.4', // langbee.shop
+      host: 'my-database', // localhost
       // host: '10.127.112.4', //team04backend.shop
       // host: '172.27.48.3', //hiosi123.shop
       port: 3306,
@@ -62,8 +62,8 @@ import { ElasticsearchModule } from '@nestjs/elasticsearch';
 
     CacheModule.register<RedisClientOptions>({
       store: redisStore,
-      url: 'redis://10.107.65.3:6379', // langbee.shop
-      // url: 'redis://my-redis:6379', // local,
+      // url: 'redis://10.107.65.3:6379', // langbee.shop
+      url: 'redis://my-redis:6379', // local,
       isGlobal: true,
     }),
   ],

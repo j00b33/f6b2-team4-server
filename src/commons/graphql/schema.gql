@@ -31,6 +31,8 @@ type Board {
   writer: User!
   createdAt: DateTime!
   deletedAt: DateTime!
+  elasticdelete: String!
+  updatedAt: DateTime!
 }
 
 """
@@ -105,7 +107,7 @@ type LikeCommunityBoard {
 }
 
 type Query {
-  fetchBoards(pageSize: Float, page: Float, userId: String): [Board!]!
+  fetchBoards(pageSize: Float, page: Float, userId: String, bestboardCount: Float, myLang: String, newLang: String): [Board!]!
   fetchMyBoards: [Board!]!
   fetchBoard(boardId: String!): Board!
   fetchBoardsCount(UserId: String): Int!
@@ -117,9 +119,9 @@ type Query {
   fetchCommunityBoards(pageSize: Float, page: Float, userId: String): [CommunityBoard!]!
   fetchMyCommunityBoards: [CommunityBoard!]!
   fetchCommunityBoard(communityBoardId: String!): CommunityBoard!
-  fetchComments(boardId: String!): [Comment!]!
+  fetchComments(boardId: String!, pageSize: Float, page: Float): [Comment!]!
   fetchSavedBoards(userId: String!): [Save!]!
-  searchBoardContent(content: String!): [Board!]!
+  searchBoardContent(content: String!, page: Float, pageSize: Float): [Board!]!
   searchCommnunityContent(content: String!): [CommunityBoard!]!
   fetchReceipts: [Receipt!]!
   fetchMyReceipts: [Receipt!]!
@@ -163,7 +165,7 @@ type Mutation {
 
 input CreateBoardInput {
   content: String!
-  video: String!
+  video: String
 }
 
 input UpdateBoardInput {
